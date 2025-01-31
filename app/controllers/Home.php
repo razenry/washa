@@ -4,8 +4,11 @@ class Home
 {
     public function index()
     {
-        
-        App::view('home/index', $data= [], 'app');
+        $data = [
+            'title' => 'Homepage',
+            'app_name' => $_SESSION['app_name']
+        ];
+        App::view('homepage/index', $data, 'homepage/app');
     }    
 }
 
