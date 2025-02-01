@@ -5,7 +5,7 @@
     <div class="col-lg-8">
         <div class="card shadow-sm p-3">
 
-            <table class="table" id="dataTable">
+            <table class="table table-white" id="dataTable">
                 <thead>
                     <tr>
                         <th>NO.</th>
@@ -25,10 +25,12 @@
                             <td><?= $p['level'] ?></td>
                             <td class="d-flex justify-content-center gap-3 align-items-center">
                                 <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#detail<?= $p['id'] ?>" aria-controls="detail">Detail</button>
-                                <button class="btn btn-warning">Edit</button>
+                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $p['id'] ?>">Edit</button>
                                 <button class="btn btn-danger">Hapus</button>
                             </td>
                         </tr>
+
+                        <!-- Detail Modal -->
 
                         <div class="offcanvas offcanvas-end" tabindex="-1" id="detail<?= $p['id'] ?>" aria-labelledby="detailLabel">
                             <div class="offcanvas-header">
@@ -67,6 +69,66 @@
                             </div>
                         </div>
 
+                        <!-- Edit Modal -->
+                        <div class="modal fade" id="edit<?= $p['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $p['id'] ?>" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="editLabel<?= $p['id'] ?>">Edit Petugas</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form method="post" action="<?= Routes::base('petugas/edit') ?>">
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="biodata" class="form-label">Biodata</label>
+                                                <div class="input-group">
+                                                    <select class="form-select" id="biodata" name="id_biodata">
+                                                        <option value="" disabled selected>Pilih biodata</option>
+                                                        <?php foreach ($biodata as $b) : ?>
+                                                            <option value="<?= $b['id'] ?>" <?= $b['id'] == $p['id_biodata'] ? 'selected' : '' ?>><?= $b['nama'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Tambah</button>
+                                                </div>
+                                                <?php if (isset($_SESSION['errors']['id_biodata'])) : ?>
+                                                    <p class="text-danger mt-1"><?= $_SESSION['errors']['id_biodata'] ?></p>
+                                                <?php endif; ?>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="username" class="form-label">Username</label>
+                                                <input class="form-control" id="username" name="username" value="<?= $p['username'] ?>" placeholder="Masukkan username">
+                                                <?php if (isset($_SESSION['errors']['username'])) : ?>
+                                                    <p class="text-danger mt-1"><?= $_SESSION['errors']['username'] ?></p>
+                                                <?php endif; ?>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="password" class="form-label">Password</label>
+                                                <input class="form-control" type="password" name="password" id="password" placeholder="********">
+                                                <?php if (isset($_SESSION['errors']['password'])) : ?>
+                                                    <p class="text-danger mt-1"><?= $_SESSION['errors']['password'] ?></p>
+                                                <?php endif; ?>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="verifikasi_password" class="form-label">Konfirmasi Password</label>
+                                                <input class="form-control" type="password" name="verifikasi_password" id="verifikasi_password" placeholder="********">
+                                                <?php if (isset($_SESSION['errors']['verifikasi_password'])) : ?>
+                                                    <p class="text-danger mt-1"><?= $_SESSION['errors']['verifikasi_password'] ?></p>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                            <button type="submit" class="btn btn-warning">Update</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
                     <?php endforeach; ?>
                 </tbody>
             </table>
@@ -79,21 +141,18 @@
             <form class="" method="post" action="<?= Routes::base('petugas/tambah') ?>">
 
                 <div class="mb-3">
-                    <label for="biodata" class="form-label">Biodata</label>
+                    <label for="searchBiodata" class="form-label">Biodata</label>
                     <div class="input-group">
-                        <select class="form-select" id="biodata" aria-label="Select" name="id_biodata">
-                            <option value="" disabled selected>Pilih biodata</option>
-                            <?php foreach ($biodata as $key => $b) : ?>
-                                <option value="<?= $b['id'] ?>"><?= $b['nama'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <input type="text" class="form-control dropdown-toggle" id="searchBiodata" placeholder="Ketik untuk mencari..." data-bs-toggle="dropdown" aria-expanded="false" onkeyup="filterBiodata()">
                         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Tambah</button>
+                        <ul class="dropdown-menu w-100" id="biodataList" style="max-height: 200px; overflow-y: auto;">
+                            <?php foreach ($biodata as $b) : ?>
+                                <li><a href="#" class="dropdown-item" onclick="selectBiodata(<?= $b['id'] ?>, '<?= $b['nama'] ?>')"><?= $b['nama'] ?></a></li>
+                            <?php endforeach; ?>
+                        </ul>
                     </div>
-                    <?php if (isset($_SESSION['errors']['id_biodata'])) :  ?>
-                        <p class="text-danger mt-1"><?= $_SESSION['errors']['id_biodata'] ?></p>
-                    <?php endif;  ?>
+                    <input type="hidden" name="id_biodata" id="selectedBiodata">
                 </div>
-
 
                 <div class="mb-3">
                     <label for="validationTextarea" class="form-label">Username</label>
@@ -168,3 +227,34 @@
         </div>
     </div>
 </div>
+
+<!-- JS -->
+<script>
+    function filterBiodata() {
+        let input = document.getElementById("searchBiodata").value.toLowerCase();
+        let items = document.querySelectorAll("#biodataList .dropdown-item");
+        let hasResult = false;
+
+        items.forEach(item => {
+            let text = item.textContent.toLowerCase();
+            if (text.includes(input)) {
+                item.style.display = "";
+                hasResult = true;
+            } else {
+                item.style.display = "none";
+            }
+        });
+
+        let dropdown = new bootstrap.Dropdown(document.getElementById("searchBiodata"));
+        if (hasResult) {
+            dropdown.show();
+        } else {
+            dropdown.hide();
+        }
+    }
+
+    function selectBiodata(id, name) {
+        document.getElementById("searchBiodata").value = name; 
+        document.getElementById("selectedBiodata").value = id; 
+    }
+</script>
