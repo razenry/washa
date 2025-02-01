@@ -143,7 +143,7 @@
                 <div class="mb-3">
                     <label for="searchBiodata" class="form-label">Biodata</label>
                     <div class="input-group">
-                        <input type="text" class="form-control dropdown-toggle" id="searchBiodata" placeholder="Ketik untuk mencari..." data-bs-toggle="dropdown" aria-expanded="false" onkeyup="filterBiodata()">
+                        <input type="text" class="form-control dropdown-toggle" id="searchBiodata" placeholder="Ketik untuk mencari..." data-bs-toggle="dropdown" aria-expanded="false" onkeyup="filterBiodata()" onblur="validateBiodata()">
                         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Tambah</button>
                         <ul class="dropdown-menu w-100" id="biodataList" style="max-height: 200px; overflow-y: auto;">
                             <?php foreach ($biodata as $b) : ?>
@@ -151,6 +151,9 @@
                             <?php endforeach; ?>
                         </ul>
                     </div>
+                    <?php if (isset($_SESSION['errors']['id_biodata'])) :  ?>
+                        <p class="text-danger mt-1"><?= $_SESSION['errors']['id_biodata'] ?></p>
+                    <?php endif; ?>
                     <input type="hidden" name="id_biodata" id="selectedBiodata">
                 </div>
 
@@ -230,6 +233,13 @@
 
 <!-- JS -->
 <script>
+    let validBiodata = [];
+
+    // Simpan daftar nama biodata yang valid
+    document.querySelectorAll("#biodataList .dropdown-item").forEach(item => {
+        validBiodata.push(item.textContent.trim().toLowerCase());
+    });
+
     function filterBiodata() {
         let input = document.getElementById("searchBiodata").value.toLowerCase();
         let items = document.querySelectorAll("#biodataList .dropdown-item");
@@ -254,7 +264,18 @@
     }
 
     function selectBiodata(id, name) {
-        document.getElementById("searchBiodata").value = name; 
-        document.getElementById("selectedBiodata").value = id; 
+        document.getElementById("searchBiodata").value = name; // Set input dengan nama
+        document.getElementById("selectedBiodata").value = id; // Simpan ID di hidden input
+    }
+
+    function validateBiodata() {
+        let inputField = document.getElementById("searchBiodata");
+        let inputValue = inputField.value.trim().toLowerCase();
+
+        // Jika input tidak ada di daftar valid, kosongkan
+        if (!validBiodata.includes(inputValue)) {
+            inputField.value = ""; // Kosongkan input
+            document.getElementById("selectedBiodata").value = ""; // Kosongkan ID
+        }
     }
 </script>
