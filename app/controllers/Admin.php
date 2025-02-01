@@ -12,6 +12,7 @@ class Admin
             'title' => 'Admin Login',
             'anggota' => $card['anggota'],
             'petugas' => $card['petugas'],
+            'motivation' => ExtendsHelper::getMotivation(),
         ];
         App::view('admin/dashboard/index', $data, 'admin/app');
     }

@@ -1,5 +1,7 @@
 <h1 class="fw-bold my-3">Hallo <?= $_SESSION['user']['username'] ?? 'Guest' ?> 👋</h1>
 
+<p class=" my-3 mb-5"><?= $motivation ?></p>
+
 <div class="row mt-3">
     <div class="col-lg-3">
         <div class="card shadow bg-info rounded-pill">
@@ -55,3 +57,9 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    setInterval(function() {
+        location.reload();
+    }, 3000); 
+</script>
