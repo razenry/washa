@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary p-3">
   <div class="container">
     <a class="navbar-brand fw-bold" href="<?= Routes::base('admin') ?>">
       Washa
@@ -23,9 +23,10 @@
               Master Data
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Biodata</a></li>
-              <li><a class="dropdown-item" href="#">Petugas</a></li>
-              <li><a class="dropdown-item" href="#">Anggota</a></li>
+              <li><a class="dropdown-item" href="<?= Routes::base('admin/biodata') ?>">Biodata</a></li>
+              <li><a class="dropdown-item" href="<?= Routes::base('admin/petugas') ?>">Petugas</a></li>
+              <li><a class="dropdown-item" href="<?= Routes::base('admin/anggota') ?>">Anggota</a></li>
+              <li><a class="dropdown-item" href="<?= Routes::base('admin/jenis_cucian') ?>">Jenis Cucian</a></li>
             </ul>
           </li>
         <?php endif; ?>

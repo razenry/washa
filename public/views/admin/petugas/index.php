@@ -1,26 +1,117 @@
-<h1 class="fw-bold fs-1 mb-3">Data Petugas</h1>
+<h1 class="fw-bold my-5">Data Petugas</h1>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>NO.</th>
-            <th>Nama</th>
-            <th>Notelp</th>
-            <th>Level</th>
-            <th class="text-center">Aksi</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Kafka</td>
-            <td>085161772073</td>
-            <td>Admin</td>
-            <td class="d-flex justify-content-center gap-3 align-items-center">
-                <button class="btn btn-info">Detail</button>
-                <button class="btn btn-warning">Edit</button>
-                <button class="btn btn-danger">Hapus</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="row">
+
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>NO.</th>
+                        <th>Nama</th>
+                        <th>Notelp</th>
+                        <th>Level</th>
+                        <th class="text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Kafka</td>
+                        <td>085161772073</td>
+                        <td>Admin</td>
+                        <td class="d-flex justify-content-center gap-3 align-items-center">
+                            <button class="btn btn-info">Detail</button>
+                            <button class="btn btn-warning">Edit</button>
+                            <button class="btn btn-danger">Hapus</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card p-4 shadow-sm">
+            <h4 class="my-2 mb-3 text-center">Tambah Petugas</h4>
+            <form class="">
+
+                <div class="mb-3">
+                    <label for="biodata" class="form-label">Biodata</label>
+                    <div class="input-group">
+                        <select class="form-select" id="biodata" required aria-label="Select" name="id_biodata">
+                            <option value="" disabled selected>Pilih biodata</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Tambah</button>
+                    </div>
+                </div>
+
+
+                <div class="mb-3">
+                    <label for="validationTextarea" class="form-label">Username</label>
+                    <input class="form-control" id="validationTextarea" placeholder="Masukan username">
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input class="form-control" id="password" placeholder="********">
+                </div>
+
+                <div class="mb-3">
+                    <label for="verifikasi_password" class="form-label">Konfirmasi Password</label>
+                    <input class="form-control" id="verifikasi_password" placeholder="********">
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-primary" type="submit">Tambah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Biodata</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="">
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="nama" class="form-label">Nama</label>
+                        <input class="form-control" id="nama" type="text" name="nama" placeholder="Masukan nama">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="alamat" class="form-label">Alamat</label>
+                        <textarea class="form-control" id="alamat" name="alamat" placeholder="Masukan alamat"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input class="form-control" id="email" type="email" name="email" placeholder="example@example.com">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="notelp" class="form-label">No Telp.</label>
+                        <input class="form-control" id="notelp" type="number" name="notelp" placeholder="0885161552065">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Tambah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
