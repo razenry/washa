@@ -18,6 +18,14 @@ class Petugas {
             header('Location:' . Routes::base('admin/petugas'));
         }
 
-         die(var_dump($validatedData));  
+        $result = PetugasModel::insert($validatedData);
+
+        if ($result) {
+            $_SESSION['success'] = "Data berhasil di tambahkan";
+            header('Location: ' . Routes::base('admin/petugas'));
+        } else {
+            $_SESSION['errors'] = "Data gagal di tambahkan";
+            header('Location: ' . Routes::base('admin/petugas'));
+        }
     }
 }

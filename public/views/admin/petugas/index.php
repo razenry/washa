@@ -9,7 +9,7 @@
                 <thead>
                     <tr>
                         <th>NO.</th>
-                        <th>Nama</th>
+                        <th>Username</th>
                         <th>Notelp</th>
                         <th>Level</th>
                         <th class="text-center">Aksi</th>
@@ -20,15 +20,53 @@
                     foreach ($petugas as $key => $p) : ?>
                         <tr>
                             <td><?= $i++ ?></td>
-                            <td><?= $p['username'] ?></td>
+                            <td><?= TextHelper::limitText($p['username'], 20) ?></td>
                             <td><?= $p['notelp'] ?></td>
                             <td><?= $p['level'] ?></td>
                             <td class="d-flex justify-content-center gap-3 align-items-center">
-                                <button class="btn btn-info">Detail</button>
+                                <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#detail<?= $p['id'] ?>" aria-controls="detail">Detail</button>
                                 <button class="btn btn-warning">Edit</button>
                                 <button class="btn btn-danger">Hapus</button>
                             </td>
                         </tr>
+
+                        <div class="offcanvas offcanvas-end" tabindex="-1" id="detail<?= $p['id'] ?>" aria-labelledby="detailLabel">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title" id="detailLabel">Detail petugas</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" disabled readonly value="<?= $p['username'] ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="text" class="form-control" disabled readonly value="<?= $p['email'] ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="level" class="form-label">Level</label>
+                                    <input type="text" class="form-control" disabled readonly value="<?= $p['level'] ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="notelp" class="form-label">No telp.</label>
+                                    <input type="text" class="form-control" disabled readonly value="<?= $p['notelp'] ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="notelp" class="form-label">Status</label>
+                                    <input type="text" class="form-control" disabled readonly value="<?= $p['status'] == 1 ? 'Aktif' : 'Tidak Aktif' ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="notelp" class="form-label">Alamat</label>
+                                    <textarea type="text" class="form-control" disabled readonly><?= $p['alamat'] ?></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="notelp" class="form-label">Dibuat</label>
+                                    <input type="text" class="form-control" disabled readonly value="<?= DateHelper::formatIndonesianDateTime($p['dibuat']) ?>">
+                                </div>
+                            </div>
+                        </div>
+
                     <?php endforeach; ?>
                 </tbody>
             </table>
@@ -51,7 +89,7 @@
                         </select>
                         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Tambah</button>
                     </div>
-                    <?php if(isset($_SESSION['errors']['id_biodata'])) :  ?>
+                    <?php if (isset($_SESSION['errors']['id_biodata'])) :  ?>
                         <p class="text-danger mt-1"><?= $_SESSION['errors']['id_biodata'] ?></p>
                     <?php endif;  ?>
                 </div>
@@ -60,7 +98,7 @@
                 <div class="mb-3">
                     <label for="validationTextarea" class="form-label">Username</label>
                     <input class="form-control" id="validationTextarea" name="username" placeholder="Masukan username">
-                    <?php if(isset($_SESSION['errors']['username'])) :  ?>
+                    <?php if (isset($_SESSION['errors']['username'])) :  ?>
                         <p class="text-danger mt-1"><?= $_SESSION['errors']['username'] ?></p>
                     <?php endif;  ?>
                 </div>
@@ -68,7 +106,7 @@
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input class="form-control" type="password" name="password" id="password" placeholder="********">
-                    <?php if(isset($_SESSION['errors']['password'])) :  ?>
+                    <?php if (isset($_SESSION['errors']['password'])) :  ?>
                         <p class="text-danger mt-1"><?= $_SESSION['errors']['password'] ?></p>
                     <?php endif;  ?>
                 </div>
@@ -76,7 +114,7 @@
                 <div class="mb-3">
                     <label for="verifikasi_password" class="form-label">Konfirmasi Password</label>
                     <input class="form-control" type="password" name="verifikasi_password" id="verifikasi_password" placeholder="********">
-                    <?php if(isset($_SESSION['errors']['verifikasi_password'])) :  ?>
+                    <?php if (isset($_SESSION['errors']['verifikasi_password'])) :  ?>
                         <p class="text-danger mt-1"><?= $_SESSION['errors']['verifikasi_password'] ?></p>
                     <?php endif;  ?>
                 </div>
@@ -90,7 +128,7 @@
 
 </div>
 
-<!-- Modal -->
+<!-- Modal Tambah -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -123,7 +161,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                     <button type="submit" class="btn btn-primary">Tambah</button>
                 </div>
             </form>

@@ -13,24 +13,36 @@ class PetugasModel
         return $data;
     }
 
-    public static function validation($data)
+    public static function insert($data)
     {
-        if (empty($data['id_biodata'])) {
-            $data['errors']['id_biodata'] = 'Biodata harus diisi';
-        }
-        if (empty($data['username'])) {
-            $data['errors']['username'] = 'Username harus diisi';
-        }
-        if (empty($data['password'])) {
-            $data['errors']['password'] = 'Password harus diisi';
-        }
-        if (empty($data['verifikasi_password'])) {
-            $data['errors']['verifikasi_password'] = 'Konfirmasi password harus diisi';
-        }
-        if ($data['password'] !== $data['verifikasi_password']) {
-            $data['errors']['verifikasi_password'] = 'Password tidak sama';
-        }
-        return $data;
+        $insertId = DB::table('akun')
+            ->insert(['username' => $data['username'], 'password' => $data['password'], 'level' => 'Petugas', 'status' => 1, 'id_biodata' => $data['id_biodata']]);
+        return $insertId;
     }
 
+    public static function validation($data)
+    {
+
+        if (!empty($data)) {
+            $data['errors'] = [];
+            if ($data['id_biodata'] == null) {
+                $data['errors']['id_biodata'] = 'Biodata harus diisi';
+            }
+            if ($data['username'] == null) {
+                $data['errors']['username'] = 'Username harus diisi';
+            }
+            if ($data['password'] == null) {
+                $data['errors']['password'] = 'Password harus diisi';
+            }
+            if ($data['verifikasi_password'] == null) {
+                $data['errors']['verifikasi_password'] = 'Konfirmasi password harus diisi';
+            }
+            if ($data['password'] !== $data['verifikasi_password']) {
+                $data['errors']['verifikasi_password'] = 'Password tidak sama';
+            }
+            return $data;
+        } else {
+            return $data['errors'] = "Masukan username dan password";
+        }
+    }
 }
