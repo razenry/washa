@@ -16,17 +16,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Kafka</td>
-                        <td>085161772073</td>
-                        <td>Admin</td>
-                        <td class="d-flex justify-content-center gap-3 align-items-center">
-                            <button class="btn btn-info">Detail</button>
-                            <button class="btn btn-warning">Edit</button>
-                            <button class="btn btn-danger">Hapus</button>
-                        </td>
-                    </tr>
+                    <?php $i = 1;
+                    foreach ($petugas as $key => $p) : ?>
+                        <tr>
+                            <td><?= $i++ ?></td>
+                            <td><?= $p['username'] ?></td>
+                            <td><?= $p['notelp'] ?></td>
+                            <td><?= $p['level'] ?></td>
+                            <td class="d-flex justify-content-center gap-3 align-items-center">
+                                <button class="btn btn-info">Detail</button>
+                                <button class="btn btn-warning">Edit</button>
+                                <button class="btn btn-danger">Hapus</button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -42,9 +45,9 @@
                     <div class="input-group">
                         <select class="form-select" id="biodata" required aria-label="Select" name="id_biodata">
                             <option value="" disabled selected>Pilih biodata</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <?php foreach ($biodata as $key => $b) : ?>
+                                <option value="<?= $b['id'] ?>"><?= $b['nama'] ?></option>
+                            <?php endforeach; ?>
                         </select>
                         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Tambah</button>
                     </div>
@@ -83,7 +86,7 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Biodata</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="">
+            <form class="" method="post" action="<?= Routes::base('biodata/tambah') ?>">
                 <div class="modal-body">
 
                     <div class="mb-3">
@@ -109,7 +112,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Tambah</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
                 </div>
             </form>
         </div>

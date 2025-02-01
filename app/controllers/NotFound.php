@@ -29,7 +29,7 @@ class NotFound
         $data['message'] = $message;
 
         // Render the view.
-        echo '404' . $data['message'];	
+        App::view('error/404/index', $data, 'error/app');
 
     }
 }

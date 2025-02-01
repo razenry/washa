@@ -32,8 +32,11 @@ class Admin
         UserModel::isLog();
         
         $data = [
-            'title' => 'Data Petugas'
+            'title' => 'Data Petugas',
+            'petugas' => PetugasModel::getPetugas(),
+            'biodata' => BiodataModel::getBiodata()
         ];
+
         App::view('admin/petugas/index', $data, 'admin/app');
 
     }
