@@ -1,0 +1,16 @@
+$Washa
+
+* User ingin memesan jasa laundry
+
+- User daftar jika belum memiliki akun
+- jika sudah langsung memilih layanan
+- layanan di pilih dan melakukan pembayaran
+- setelah pembayaran user mendapat kode layanan untuk tracking
+
+~ user perlu login ? jika iya ada fitur 
+- daftar member (user bisa daftar melalui landing page dan punya dashboard sendiri untuk mengecek status layanan yang di pakai)
+- 'opsional' ada pilihan mau antar jumput(dari washa) / (sendiri)
+
+~ petugas
+- petugas mencari username / kode user jika belum ada maka di daftarkan dulu
+- jika sudah  

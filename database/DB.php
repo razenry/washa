@@ -92,6 +92,13 @@ class DB {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function single() {
+        $query = self::buildSelectQuery();
+        $stmt = self::$pdo->prepare($query);
+        $stmt->execute(self::$values);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     // INSERT query
     public static function insert($data) {
         $columns = implode(", ", array_keys($data));
@@ -138,8 +145,72 @@ class DB {
         return $stmt->rowCount();
     }
 
+    // COUNT query
+    public static function count() {
+        $query = "SELECT COUNT(*) FROM " . self::$table;
+        
+        if (count(self::$join) > 0) {
+            $query .= " " . implode(" ", self::$join);
+        }
+
+        if (count(self::$where) > 0) {
+            $query .= " WHERE " . implode(" AND ", self::$where);
+        }
+
+        $stmt = self::$pdo->prepare($query);
+        $stmt->execute(self::$values);
+        
+        return $stmt->fetchColumn();
+    }
+
+    // MAX query
+    public static function max($column) {
+        $query = "SELECT MAX($column) FROM " . self::$table;
+        
+        if (count(self::$join) > 0) {
+            $query .= " " . implode(" ", self::$join);
+        }
+
+        if (count(self::$where) > 0) {
+            $query .= " WHERE " . implode(" AND ", self::$where);
+        }
+
+        $stmt = self::$pdo->prepare($query);
+        $stmt->execute(self::$values);
+        
+        return $stmt->fetchColumn();
+    }
+
+    // MIN query
+    public static function min($column) {
+        $query = "SELECT MIN($column) FROM " . self::$table;
+        
+        if (count(self::$join) > 0) {
+            $query .= " " . implode(" ", self::$join);
+        }
+
+        if (count(self::$where) > 0) {
+            $query .= " WHERE " . implode(" AND ", self::$where);
+        }
+
+        $stmt = self::$pdo->prepare($query);
+        $stmt->execute(self::$values);
+        
+        return $stmt->fetchColumn();
+    }
+
+    // Update status (misalnya mengubah status menjadi 'active' atau 'inactive')
+    public static function updateStatus($status, $condition) {
+        $query = "UPDATE " . self::$table . " SET status = ? WHERE $condition";
+        
+        $stmt = self::$pdo->prepare($query);
+        $stmt->execute([$status]);
+
+        return $stmt->rowCount();
+    }
+
     // Reset state setelah query dieksekusi
-    private static function reset() {
+    public static function reset() {
         self::$select = '*';
         self::$where = [];
         self::$join = [];
