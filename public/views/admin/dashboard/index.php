@@ -1,4 +1,4 @@
-<h1 class="fw-bold my-5">Hallo <?= $_SESSION['user']['username'] ?? 'Guest' ?> 👋</h1>
+<h1 class="fw-bold my-3">Hallo <?= $_SESSION['user']['username'] ?? 'Guest' ?> 👋</h1>
 
 <div class="row mt-3">
     <div class="col-lg-3">
@@ -10,12 +10,12 @@
         </div>
     </div>
     <div class="col-lg-3">
-        <div class="card shadow bg-warning rounded-pill">
+        <a href="<?= Routes::base('admin/petugas') ?>" class="card shadow bg-warning rounded-pill text-dark" style="text-decoration: none;">
             <div class="card-body w-100 p-4">
                 <h3 class="text-center">Petugas</h3>
                 <p class="text-center fw-bold fs-3"><?= $petugas ?></p>
             </div>
-        </div>
+        </a>
     </div>
     <div class="col-lg-3">
         <div class="card shadow bg-primary rounded-pill">

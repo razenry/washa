@@ -1,4 +1,4 @@
-<h1 class="fw-bold my-5">Transaksi</h1>
+<h1 class="fw-bold my-3">Transaksi</h1>
 
 <div class="row">
     <div class="col-lg-8">

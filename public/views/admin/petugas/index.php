@@ -1,11 +1,11 @@
-<h1 class="fw-bold my-5">Data Petugas</h1>
+<h1 class="fw-bold my-3">Data Petugas</h1>
 
 <div class="row">
 
     <div class="col-lg-8">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm p-3">
 
-            <table class="table table-bordered">
+            <table class="table" id="dataTable">
                 <thead>
                     <tr>
                         <th>NO.</th>
@@ -38,12 +38,12 @@
     <div class="col-lg-4">
         <div class="card p-4 shadow-sm">
             <h4 class="my-2 mb-3 text-center">Tambah Petugas</h4>
-            <form class="">
+            <form class="" method="post" action="<?= Routes::base('petugas/tambah') ?>">
 
                 <div class="mb-3">
                     <label for="biodata" class="form-label">Biodata</label>
                     <div class="input-group">
-                        <select class="form-select" id="biodata" required aria-label="Select" name="id_biodata">
+                        <select class="form-select" id="biodata" aria-label="Select" name="id_biodata">
                             <option value="" disabled selected>Pilih biodata</option>
                             <?php foreach ($biodata as $key => $b) : ?>
                                 <option value="<?= $b['id'] ?>"><?= $b['nama'] ?></option>
@@ -51,26 +51,38 @@
                         </select>
                         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Tambah</button>
                     </div>
+                    <?php if(isset($_SESSION['errors']['id_biodata'])) :  ?>
+                        <p class="text-danger mt-1"><?= $_SESSION['errors']['id_biodata'] ?></p>
+                    <?php endif;  ?>
                 </div>
 
 
                 <div class="mb-3">
                     <label for="validationTextarea" class="form-label">Username</label>
-                    <input class="form-control" id="validationTextarea" placeholder="Masukan username">
+                    <input class="form-control" id="validationTextarea" name="username" placeholder="Masukan username">
+                    <?php if(isset($_SESSION['errors']['username'])) :  ?>
+                        <p class="text-danger mt-1"><?= $_SESSION['errors']['username'] ?></p>
+                    <?php endif;  ?>
                 </div>
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input class="form-control" id="password" placeholder="********">
+                    <input class="form-control" type="password" name="password" id="password" placeholder="********">
+                    <?php if(isset($_SESSION['errors']['password'])) :  ?>
+                        <p class="text-danger mt-1"><?= $_SESSION['errors']['password'] ?></p>
+                    <?php endif;  ?>
                 </div>
 
                 <div class="mb-3">
                     <label for="verifikasi_password" class="form-label">Konfirmasi Password</label>
-                    <input class="form-control" id="verifikasi_password" placeholder="********">
+                    <input class="form-control" type="password" name="verifikasi_password" id="verifikasi_password" placeholder="********">
+                    <?php if(isset($_SESSION['errors']['verifikasi_password'])) :  ?>
+                        <p class="text-danger mt-1"><?= $_SESSION['errors']['verifikasi_password'] ?></p>
+                    <?php endif;  ?>
                 </div>
 
                 <div class="mb-3">
-                    <button class="btn btn-primary" type="submit">Tambah</button>
+                    <button class="btn btn-primary" type="submit" name="tambah">Tambah</button>
                 </div>
             </form>
         </div>

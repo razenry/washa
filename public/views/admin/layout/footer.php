@@ -17,4 +17,4 @@
 </footer>
 
 <?php if (isset($_SESSION['success'])) unset($_SESSION['success']) ?>
-<?php if (isset($_SESSION['error'])) unset($_SESSION['error']) ?>
+<?php if (isset($_SESSION['errors'])) unset($_SESSION['errors']) ?>

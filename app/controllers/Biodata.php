@@ -5,6 +5,8 @@ class Biodata
 
     public function tambah()
     {
+        UserModel::isLog();
+
         header('Content-Type: application/json');
 
         $validatedData = BiodataModel::validationForm($_POST);

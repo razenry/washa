@@ -34,7 +34,9 @@ class Admin
         $data = [
             'title' => 'Data Petugas',
             'petugas' => PetugasModel::getPetugas(),
-            'biodata' => BiodataModel::getBiodata()
+            'biodata' => BiodataModel::getBiodata(),
+            'errors' => $_SESSION['errors'] ?? null
+
         ];
 
         App::view('admin/petugas/index', $data, 'admin/app');
@@ -99,6 +101,7 @@ class Admin
 
     public static function logout()
     {
+        UserModel::isLog();
         unset($_SESSION);
         session_destroy();
         header("Location: " . Routes::base('admin/login'));
@@ -108,6 +111,7 @@ class Admin
 
     public function test()
     {
+        UserModel::isLog();
         $categories = DB::table('blogs')
             ->select(['blogs.id', 'blogs.slug', 'blogs.title', 'categories.name as category_name', 'categories.id as category_id', 'users.name as author'])
             ->join('categories', 'blogs.id_category = categories.id')
