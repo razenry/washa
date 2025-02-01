@@ -1413,6 +1413,9 @@
   .m-5 {
     margin: calc(var(--spacing) * 5);
   }
+  .m-9 {
+    margin: calc(var(--spacing) * 9);
+  }
   .m-auto {
     margin: auto;
   }
@@ -2133,6 +2136,9 @@
     .datatable-wrapper & .datatable-empty {
       text-align: center;
     }
+  }
+  .w-1 {
+    width: calc(var(--spacing) * 1);
   }
   .w-1\/2 {
     width: calc(1/2 * 100%);
@@ -3223,6 +3229,9 @@
   .\!bg-gray-50 {
     background-color: var(--color-gray-50) !important;
   }
+  .\!bg-gray-700 {
+    background-color: var(--color-gray-700) !important;
+  }
   .bg-\(--my_variable\) {
     background-color: var(--my_variable);
   }
@@ -3267,6 +3276,9 @@
   }
   .bg-gray-600 {
     background-color: var(--color-gray-600);
+  }
+  .bg-gray-900 {
+    background-color: var(--color-gray-900);
   }
   .bg-gray-900\/50 {
     background-color: color-mix(in oklab, var(--color-gray-900) 50%, transparent);
