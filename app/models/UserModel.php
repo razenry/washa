@@ -21,7 +21,7 @@ class UserModel
 
     public static function getUserByUsername($username)
     {
-        $user = DB::table('akun as a')->select()->join('biodata_user as bu', 'a.id_biodata = bu.id')->where('a.username', '=', $username)->single();
+        $user = DB::table('akun as a')->select()->join('biodata_user as bu', 'a.id_biodata = bu.id_biodata')->where('a.username', '=', $username)->single();
 
         return $user;
     }

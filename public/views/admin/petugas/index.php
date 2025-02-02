@@ -39,6 +39,10 @@
                             </div>
                             <div class="offcanvas-body">
                                 <div class="mb-3">
+                                    <label for="nama" class="form-label">Nama</label>
+                                    <input type="text" class="form-control" disabled readonly value="<?= $p['nama'] ?>">
+                                </div>
+                                <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>
                                     <input type="text" class="form-control" disabled readonly value="<?= $p['username'] ?>">
                                 </div>
@@ -78,15 +82,16 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form method="post" action="<?= Routes::base('petugas/edit') ?>">
+                                    <input type="hidden" name="id" value="<?= $p['id'] ?>">
                                         <div class="modal-body">
-                                            
+
                                             <div class="mb-3">
                                                 <label for="biodata" class="form-label">Biodata</label>
                                                 <div class="input-group">
                                                     <select class="form-select" id="biodata" name="id_biodata">
                                                         <option value="" disabled selected>Pilih biodata</option>
                                                         <?php foreach ($biodata as $b) : ?>
-                                                            <option value="<?= $b['id'] ?>" <?= $b['id'] == $p['id_biodata'] ? 'selected' : '' ?>><?= $b['nama'] ?></option>
+                                                            <option value="<?= $b['id_biodata'] ?>" <?= $b['id_biodata'] == $p['id_biodata'] ? 'selected' : '' ?>><?= $b['nama'] ?></option>
                                                         <?php endforeach; ?>
                                                     </select>
                                                     <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Tambah</button>
@@ -140,7 +145,7 @@
         <div class="card p-4 shadow-sm">
             <h4 class="my-2 mb-3 text-center">Tambah Petugas</h4>
             <form class="" method="post" action="<?= Routes::base('petugas/tambah') ?>">
-
+            
                 <div class="mb-3">
                     <label for="searchBiodata" class="form-label">Biodata</label>
                     <div class="input-group">
@@ -148,7 +153,7 @@
                         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Tambah</button>
                         <ul class="dropdown-menu w-100" id="biodataList" style="max-height: 200px; overflow-y: auto;">
                             <?php foreach ($biodata as $b) : ?>
-                                <li><a href="#" class="dropdown-item" onclick="selectBiodata(<?= $b['id'] ?>, '<?= $b['nama'] ?>')"><?= $b['nama'] ?></a></li>
+                                <li><a href="#" class="dropdown-item" onclick="selectBiodata(<?= $b['id_biodata'] ?>, '<?= $b['nama'] ?>')"><?= $b['nama'] ?></a></li>
                             <?php endforeach; ?>
                         </ul>
                     </div>

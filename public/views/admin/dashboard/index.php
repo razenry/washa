@@ -1,4 +1,4 @@
-<h1 class="fw-bold my-3">Hallo <?= $_SESSION['user']['username'] ?? 'Guest' ?> 👋</h1>
+<h1 class="fw-bold my-3">Hallo <?= $_SESSION['user']['nama'] ?? 'Guest' ?> 👋</h1>
 
 <p class=" my-3 mb-5"><?= $motivation ?></p>
 

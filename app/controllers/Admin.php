@@ -40,6 +40,7 @@ class Admin
 
         ];
 
+
         App::view('admin/petugas/index', $data, 'admin/app');
 
     }
