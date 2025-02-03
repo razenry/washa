@@ -16,22 +16,21 @@ class Admin
         ];
         App::view('admin/dashboard/index', $data, 'admin/app');
     }
-    
+
     public function transaksi()
     {
         UserModel::isLog();
-        
+
         $data = [
             'title' => 'Transaksi'
         ];
         App::view('admin/transaksi/index', $data, 'admin/app');
-
     }
 
     public function petugas()
     {
         UserModel::isLog();
-        
+
         $data = [
             'title' => 'Data Petugas',
             'petugas' => PetugasModel::getPetugas(),
@@ -42,13 +41,12 @@ class Admin
 
 
         App::view('admin/petugas/index', $data, 'admin/app');
-
     }
 
     public function jenis_cucian()
     {
         UserModel::isLog();
-        
+
         $jenis_cucian = DB::table('jenis_cucian')->select()->get();
 
         $data = [
@@ -58,13 +56,12 @@ class Admin
         ];
 
         App::view('admin/jenis_cucian/index', $data, 'admin/app');
-
     }
 
     public function biodata()
     {
         UserModel::isLog();
-        
+
         $biodata = DB::table('biodata_user')->select()->get();
 
         $data = [
@@ -74,14 +71,35 @@ class Admin
         ];
 
         App::view('admin/biodata/index', $data, 'admin/app');
-
     }
+
+    public function anggota()
+    {
+        UserModel::isLog();
+
+        $anggota = DB::table('akun')
+            ->select()
+            ->join('biodata_user', 'akun.id = biodata_user.id_biodata')
+            ->where("level", "=", "Anggota")
+            ->get();
+
+        $data = [
+            'title' => 'Data Anggota',
+            'anggota' => $anggota,
+            'errors' => $_SESSION['errors'] ?? null
+        ];
+
+        App::view('admin/anggota/index', $data, 'admin/app');
+    }
+
+
+
 
 
     public function login()
     {
         if (isset($_SESSION['login'])) {
-            header('Location:'. Routes::base('admin'));
+            header('Location:' . Routes::base('admin'));
         }
 
         $data = [
@@ -94,7 +112,7 @@ class Admin
     public function auth()
     {
         if (isset($_SESSION['login'])) {
-            header('Location:'. Routes::base('admin'));
+            header('Location:' . Routes::base('admin'));
         }
 
         $validatedData = UserModel::validationLogin($_POST);
@@ -140,7 +158,6 @@ class Admin
         session_destroy();
         header("Location: " . Routes::base('admin/login'));
         exit();
-
     }
 
     public function test()
