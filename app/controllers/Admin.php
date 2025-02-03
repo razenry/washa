@@ -45,6 +45,22 @@ class Admin
 
     }
 
+    public function jenis_cucian()
+    {
+        UserModel::isLog();
+        
+        $jenis_cucian = DB::table('jenis_cucian')->select()->get();
+
+        $data = [
+            'title' => 'Data Jenis Cucian',
+            'jenis_cucian' => $jenis_cucian,
+            'errors' => $_SESSION['errors'] ?? null
+        ];
+
+        App::view('admin/jenis_cucian/index', $data, 'admin/app');
+
+    }
+
 
     public function login()
     {

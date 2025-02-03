@@ -23,7 +23,7 @@ class PetugasModel
 
     public static function update($data)
     {
-        die(var_dump($data));
+
         $updateCount = DB::table('akun')
             ->where('akun.id', '=', $data['id'])
             ->update([
