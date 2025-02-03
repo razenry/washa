@@ -110,7 +110,7 @@ class Admin
         DB::reset();
 
         $data = [
-            'title' => 'Data Anggota',
+            'title' => 'Data Customer',
             'customer' => $customer,
             'errors' => $_SESSION['errors'] ?? null
         ];

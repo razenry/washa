@@ -22,15 +22,15 @@
                             <td><?= $c['nama'] ?></td>
                             <td><?= $c['email'] ?></td>
                             <td class="d-flex justify-content-center gap-3 align-items-center">
-                                <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#detail<?= $c['id_biodata'] ?>" aria-controls="detail">Detail</button>
-                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $c['id_biodata'] ?>">Edit</button>
-                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $c['id_biodata'] ?>">Hapus</button>
+                                <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#detail<?= $c['id'] ?>" aria-controls="detail">Detail</button>
+                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $c['id'] ?>">Edit</button>
+                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $c['id'] ?>">Hapus</button>
                             </td>
                         </tr>
 
                         <!-- Detail Modal -->
 
-                        <div class="offcanvas offcanvas-end" tabindex="-1" id="detail<?= $c['id_biodata'] ?>" aria-labelledby="detailLabel">
+                        <div class="offcanvas offcanvas-end" tabindex="-1" id="detail<?= $c['id'] ?>" aria-labelledby="detailLabel">
                             <div class="offcanvas-header">
                                 <h5 class="offcanvas-title" id="detailLabel">Detail petugas</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -57,25 +57,19 @@
                                     <input type="text" class="form-control" disabled readonly value="<?= $c['notelp'] ?>">
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="dibuat" class="form-label">Dibuat</label>
-                                    <input type="text" class="form-control" disabled readonly value="<?= DateHelper::formatIndonesianDate($c['dibuat']) ?>">
-                                </div>
-
-
                             </div>
                         </div>
 
                         <!-- Edit Modal -->
-                        <div class="modal fade" id="edit<?= $c['id_biodata'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $c['id_biodata'] ?>" aria-hidden="true">
+                        <div class="modal fade" id="edit<?= $c['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $c['id'] ?>" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="editLabel<?= $c['id_biodata'] ?>">Edit Biodata</h1>
+                                        <h1 class="modal-title fs-5" id="editLabel<?= $c['id'] ?>">Edit Biodata</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form method="post" action="<?= Routes::base('biodata/edit') ?>">
-                                        <input type="hidden" name="id_biodata" value="<?= $c['id_biodata'] ?>">
+                                        <input type="hidden" name="id" value="<?= $c['id'] ?>">
                                         <div class="modal-body">
 
                                             <div class="mb-3">
@@ -122,17 +116,17 @@
                         </div>
 
                         <!-- Hapus Modal -->
-                        <div class="modal fade" id="hapus<?= $c['id_biodata'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $c['id_biodata'] ?>" aria-hidden="true">
+                        <div class="modal fade" id="hapus<?= $c['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $c['id'] ?>" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="editLabel<?= $c['id_biodata'] ?>">Konfirmasi Hapus</h1>
+                                        <h1 class="modal-title fs-5" id="editLabel<?= $c['id'] ?>">Konfirmasi Hapus</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form method="post" action="<?= Routes::base('biodata/hapus') ?>">
+                                    <form method="post" action="<?= Routes::base('customer/hapus') ?>">
 
                                         <div class="modal-body">
-                                            <input type="hidden" name="id" value="<?= $c['id_biodata'] ?>">
+                                            <input type="hidden" name="id" value="<?= $c['id'] ?>">
                                             <p class="text-center my-3">Apakah anda yakin ingin menghapus data ini?</p>
                                         </div>
 
@@ -154,26 +148,38 @@
     <div class="col-lg-4">
         <div class="card p-4 shadow-sm">
             <h4 class="my-2 mb-3 text-center">Tambah Customer</h4>
-            <form class="" method="post" action="<?= Routes::base('biodata/tambah_biodata') ?>">
+            <form class="" method="post" action="<?= Routes::base('customer/tambah') ?>">
 
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
                     <input class="form-control" id="nama" type="text" name="nama" placeholder="Masukan nama">
+                    <?php if (isset($_SESSION['errors']['nama'])) : ?>
+                        <p class="text-danger mt-1"><?= $_SESSION['errors']['nama'] ?></p>
+                    <?php endif; ?>
                 </div>
 
                 <div class="mb-3">
                     <label for="alamat" class="form-label">Alamat</label>
                     <textarea class="form-control" id="alamat" name="alamat" placeholder="Masukan alamat"></textarea>
+                    <?php if (isset($_SESSION['errors']['alamat'])) : ?>
+                        <p class="text-danger mt-1"><?= $_SESSION['errors']['alamat'] ?></p>
+                    <?php endif; ?>
                 </div>
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input class="form-control" id="email" type="email" name="email" placeholder="example@example.com">
+                    <?php if (isset($_SESSION['errors']['email'])) : ?>
+                        <p class="text-danger mt-1"><?= $_SESSION['errors']['email'] ?></p>
+                    <?php endif; ?>
                 </div>
 
                 <div class="mb-3">
                     <label for="notelp" class="form-label">No Telp.</label>
                     <input class="form-control" id="notelp" type="number" name="notelp" placeholder="0885161552065">
+                    <?php if (isset($_SESSION['errors']['notelp'])) : ?>
+                        <p class="text-danger mt-1"><?= $_SESSION['errors']['notelp'] ?></p>
+                    <?php endif; ?>
                 </div>
 
                 <button type="submit" class="btn btn-primary" name="tambah">Tambah</button>
