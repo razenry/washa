@@ -24,13 +24,17 @@
                             <td><?= DateHelper::formatTime($t['waktu_transaksi']) ?></td>
                             <td><?php
                                 if ($t['status'] == 1) {
-                                    echo 'Di proses';
+                                    echo 'Dalam Antrean';
                                 } else if ($t['status'] == 2) {
-                                    echo 'Di cuci';
+                                    echo 'Di proses';
                                 } else if ($t['status'] == 3) {
+                                    echo 'Di cuci';
+                                }else  if ($t['status'] == 4) {
+                                    echo 'Di jemur';
+                                }else if ($t['status'] == 5) {
                                     echo 'Selesai';
-                                }else {
-                                    echo 'Dalam antrean';
+                                }else{
+                                    echo 'Pending';
                                 }
                                 ?></td>
                             <td class="d-flex justify-content-center gap-3 align-items-center">
@@ -98,16 +102,16 @@
                                             <div class="mb-3">
                                                 <label for="biodata" class="form-label">Biodata</label>
                                                 <div class="input-group">
-                                                    <select class="form-select" id="biodata" name="id_biodata">
+                                                    <select class="form-select" id="biodata" name="id">
                                                         <option value="" disabled selected>Pilih biodata</option>
                                                         <?php foreach ($biodata as $b) : ?>
-                                                            <option value="<?= $b['id_biodata'] ?>" <?= $b['id_biodata'] == $t['id_biodata'] ? 'selected' : '' ?>><?= $b['nama'] ?></option>
+                                                            <option value="<?= $b['id'] ?>" <?= $b['id'] == $t['id'] ? 'selected' : '' ?>><?= $b['nama'] ?></option>
                                                         <?php endforeach; ?>
                                                     </select>
                                                     <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Tambah</button>
                                                 </div>
-                                                <?php if (isset($_SESSION['errors']['id_biodata'])) : ?>
-                                                    <p class="text-danger mt-1"><?= $_SESSION['errors']['id_biodata'] ?></p>
+                                                <?php if (isset($_SESSION['errors']['id'])) : ?>
+                                                    <p class="text-danger mt-1"><?= $_SESSION['errors']['id'] ?></p>
                                                 <?php endif; ?>
                                             </div>
 
@@ -177,49 +181,52 @@
 
     <div class="col-lg-4">
         <div class="card p-4 shadow-sm">
-            <h4 class="my-2 mb-3 text-center">Tambah Petugas</h4>
-            <form class="" method="post" action="<?= Routes::base('petugas/tambah') ?>">
+            <h4 class="my-2 mb-3 text-center">Tambah Transaksi</h4>
+            <form class="" method="post" action="<?= Routes::base('transaksi/tambah') ?>">
 
                 <div class="mb-3">
-                    <label for="searchBiodata" class="form-label">Biodata</label>
+                    <label for="searchBiodata" class="form-label">Customer</label>
                     <div class="input-group">
                         <input type="text" class="form-control dropdown-toggle" id="searchBiodata" placeholder="Ketik untuk mencari..." data-bs-toggle="dropdown" aria-expanded="false" onkeyup="filterBiodata()" onblur="validateBiodata()">
                         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Tambah</button>
                         <ul class="dropdown-menu w-100" id="biodataList" style="max-height: 200px; overflow-y: auto;">
-                            <?php foreach ($biodata as $b) : ?>
-                                <li><a href="#" class="dropdown-item" onclick="selectBiodata(<?= $b['id_biodata'] ?>, '<?= $b['nama'] ?>')"><?= $b['nama'] ?></a></li>
+                            <?php foreach ($customer as $b) : ?>
+                                <li><a href="#" class="dropdown-item" onclick="selectBiodata(<?= $b['id'] ?>, '<?= $b['nama'] ?>')"><?= $b['nama'] . ' - ' . $b['notelp'] ?></a></li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
-                    <?php if (isset($_SESSION['errors']['id_biodata'])) :  ?>
-                        <p class="text-danger mt-1"><?= $_SESSION['errors']['id_biodata'] ?></p>
+                    <?php if (isset($_SESSION['errors']['id'])) :  ?>
+                        <p class="text-danger mt-1"><?= $_SESSION['errors']['id'] ?></p>
                     <?php endif; ?>
-                    <input type="hidden" name="id_biodata" id="selectedBiodata">
+                    <input type="hidden" name="id_customer" id="selectedBiodata">
                 </div>
 
                 <div class="mb-3">
-                    <label for="validationTextarea" class="form-label">Username</label>
-                    <input class="form-control" id="validationTextarea" name="username" placeholder="Masukan username">
-                    <?php if (isset($_SESSION['errors']['username'])) :  ?>
-                        <p class="text-danger mt-1"><?= $_SESSION['errors']['username'] ?></p>
+                    <label for="tgl_transaksi" class="form-label">Tanggal Transaksi</label>
+                    <input class="form-control" id="tgl_transaksi" type="date" name="tgl_transaksi" placeholder="Masukan username">
+                    <?php if (isset($_SESSION['errors']['tgl_transaksi'])) :  ?>
+                        <p class="text-danger mt-1"><?= $_SESSION['errors']['tgl_transaksi'] ?></p>
                     <?php endif;  ?>
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input class="form-control" type="password" name="password" id="password" placeholder="********">
-                    <?php if (isset($_SESSION['errors']['password'])) :  ?>
-                        <p class="text-danger mt-1"><?= $_SESSION['errors']['password'] ?></p>
+                    <label for="waktu_transaksi" class="form-label">Waktu Transaksi</label>
+                    <input class="form-control" type="time" name="waktu_transaksi" id="waktu_transaksi" placeholder="********">
+                    <?php if (isset($_SESSION['errors']['waktu_transaksi'])) :  ?>
+                        <p class="text-danger mt-1"><?= $_SESSION['errors']['waktu_transaksi'] ?></p>
                     <?php endif;  ?>
                 </div>
 
                 <div class="mb-3">
-                    <label for="verifikasi_password" class="form-label">Konfirmasi Password</label>
-                    <input class="form-control" type="password" name="verifikasi_password" id="verifikasi_password" placeholder="********">
-                    <?php if (isset($_SESSION['errors']['verifikasi_password'])) :  ?>
-                        <p class="text-danger mt-1"><?= $_SESSION['errors']['verifikasi_password'] ?></p>
+                    <label for="nama" class="form-label">Nama Petugas</label>
+                    <input class="form-control" type="text" id="nama" value="<?= $_SESSION['user']['nama'] ?>" readonly disabled>
+                    <input class="form-control" type="hidden" name="id_petugas" id="nama" value="<?= $_SESSION['user']['id'] ?>">
+                    <?php if (isset($_SESSION['errors']['nama'])) :  ?>
+                        <p class="text-danger mt-1"><?= $_SESSION['errors']['nama'] ?></p>
                     <?php endif;  ?>
                 </div>
+
+                
 
                 <div class="mb-3">
                     <button class="btn btn-primary" type="submit" name="tambah">Tambah</button>

@@ -28,9 +28,15 @@ class Admin
             ->get();
         DB::reset();
 
+        $customer = DB::table('customer')
+            ->select()
+            ->get();
+        DB::reset();
+
         $data = [
             'title' => 'Data Transaksi',
-            'transaksi' => $transaksi
+            'transaksi' => $transaksi,
+            'customer' => $customer,
         ];
         App::view('admin/transaksi/index', $data, 'admin/app');
     }
