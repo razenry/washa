@@ -100,6 +100,23 @@ class Admin
         App::view('admin/anggota/index', $data, 'admin/app');
     }
 
+    public function customer()
+    {
+        UserModel::isLog();
+
+        $customer = DB::table('customer')
+            ->select()
+            ->get();
+        DB::reset();
+
+        $data = [
+            'title' => 'Data Anggota',
+            'customer' => $customer,
+            'errors' => $_SESSION['errors'] ?? null
+        ];
+
+        App::view('admin/customer/index', $data, 'admin/app');
+    }
 
 
 

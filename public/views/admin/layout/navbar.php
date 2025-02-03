@@ -14,9 +14,15 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="<?= Routes::base('admin') ?>">Dashboard</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= Routes::base('admin/transaksi') ?>">Transaksi</a>
-        </li>
+        <?php if (isset($_SESSION['user']['level']) && $_SESSION['user']['level'] == "Petugas") : ?>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= Routes::base('admin/transaksi') ?>">Transaksi</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= Routes::base('admin/customer') ?>">Customer</a>
+          </li>
+        <?php endif; ?>
+
         <?php if (isset($_SESSION['user']['level']) && $_SESSION['user']['level'] == "Admin") : ?>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
