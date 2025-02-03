@@ -61,6 +61,22 @@ class Admin
 
     }
 
+    public function biodata()
+    {
+        UserModel::isLog();
+        
+        $biodata = DB::table('biodata_user')->select()->get();
+
+        $data = [
+            'title' => 'Data Biodata',
+            'biodata' => $biodata,
+            'errors' => $_SESSION['errors'] ?? null
+        ];
+
+        App::view('admin/biodata/index', $data, 'admin/app');
+
+    }
+
 
     public function login()
     {
