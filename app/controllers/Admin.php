@@ -21,8 +21,16 @@ class Admin
     {
         UserModel::isLog();
 
+        $transaksi = DB::table('transaksi')
+            ->select()
+            ->join('akun', 'transaksi.id_petugas = akun.id')
+            ->join('customer', 'transaksi.id_customer = customer.id')
+            ->get();
+        DB::reset();
+
         $data = [
-            'title' => 'Transaksi'
+            'title' => 'Data Transaksi',
+            'transaksi' => $transaksi
         ];
         App::view('admin/transaksi/index', $data, 'admin/app');
     }

@@ -9,30 +9,40 @@
                 <thead>
                     <tr>
                         <th>NO.</th>
-                        <th>Username</th>
-                        <th>Notelp</th>
-                        <th>Level</th>
+                        <th>Tgl. Transaksi</th>
+                        <th>Waktu</th>
+                        <th>Status</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1;
-                    foreach ($petugas as $key => $p) : ?>
+                    foreach ($transaksi as $key => $t) : ?>
                         <tr>
                             <td><?= $i++ ?></td>
-                            <td><?= TextHelper::limitText($p['username'], 20) ?></td>
-                            <td><?= $p['notelp'] ?></td>
-                            <td><?= $p['level'] ?></td>
+                            <td><?= DateHelper::formatIndonesianDate($t['tgl_transaksi']) ?></td>
+                            <td><?= DateHelper::formatTime($t['waktu_transaksi']) ?></td>
+                            <td><?php
+                                if ($t['status'] == 1) {
+                                    echo 'Di proses';
+                                } else if ($t['status'] == 2) {
+                                    echo 'Di cuci';
+                                } else if ($t['status'] == 3) {
+                                    echo 'Selesai';
+                                }else {
+                                    echo 'Dalam antrean';
+                                }
+                                ?></td>
                             <td class="d-flex justify-content-center gap-3 align-items-center">
-                                <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#detail<?= $p['id'] ?>" aria-controls="detail">Detail</button>
-                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $p['id'] ?>">Edit</button>
-                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $p['id'] ?>">Hapus</button>
+                                <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#detail<?= $t['id'] ?>" aria-controls="detail">Detail</button>
+                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $t['id'] ?>">Edit</button>
+                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $t['id'] ?>">Hapus</button>
                             </td>
                         </tr>
 
                         <!-- Detail Modal -->
 
-                        <div class="offcanvas offcanvas-end" tabindex="-1" id="detail<?= $p['id'] ?>" aria-labelledby="detailLabel">
+                        <div class="offcanvas offcanvas-end" tabindex="-1" id="detail<?= $t['id'] ?>" aria-labelledby="detailLabel">
                             <div class="offcanvas-header">
                                 <h5 class="offcanvas-title" id="detailLabel">Detail petugas</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -40,49 +50,49 @@
                             <div class="offcanvas-body">
                                 <div class="mb-3">
                                     <label for="nama" class="form-label">Nama</label>
-                                    <input type="text" class="form-control" disabled readonly value="<?= $p['nama'] ?>">
+                                    <input type="text" class="form-control" disabled readonly value="<?= $t['nama'] ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" disabled readonly value="<?= $p['username'] ?>">
+                                    <input type="text" class="form-control" disabled readonly value="<?= $t['username'] ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="text" class="form-control" disabled readonly value="<?= $p['email'] ?>">
+                                    <input type="text" class="form-control" disabled readonly value="<?= $t['email'] ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="level" class="form-label">Level</label>
-                                    <input type="text" class="form-control" disabled readonly value="<?= $p['level'] ?>">
+                                    <input type="text" class="form-control" disabled readonly value="<?= $t['level'] ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="notelp" class="form-label">No telp.</label>
-                                    <input type="text" class="form-control" disabled readonly value="<?= $p['notelp'] ?>">
+                                    <input type="text" class="form-control" disabled readonly value="<?= $t['notelp'] ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="notelp" class="form-label">Status</label>
-                                    <input type="text" class="form-control" disabled readonly value="<?= $p['status'] == 1 ? 'Aktif' : 'Tidak Aktif' ?>">
+                                    <input type="text" class="form-control" disabled readonly value="<?= $t['status'] == 1 ? 'Aktif' : 'Tidak Aktif' ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="notelp" class="form-label">Alamat</label>
-                                    <textarea type="text" class="form-control" disabled readonly><?= $p['alamat'] ?></textarea>
+                                    <textarea type="text" class="form-control" disabled readonly><?= $t['alamat'] ?></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="notelp" class="form-label">Dibuat</label>
-                                    <input type="text" class="form-control" disabled readonly value="<?= DateHelper::formatIndonesianDateTime($p['dibuat']) ?>">
+                                    <input type="text" class="form-control" disabled readonly value="<?= DateHelper::formatIndonesianDateTime($t['dibuat']) ?>">
                                 </div>
                             </div>
                         </div>
 
                         <!-- Edit Modal -->
-                        <div class="modal fade" id="edit<?= $p['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $p['id'] ?>" aria-hidden="true">
+                        <div class="modal fade" id="edit<?= $t['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $t['id'] ?>" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="editLabel<?= $p['id'] ?>">Edit Petugas</h1>
+                                        <h1 class="modal-title fs-5" id="editLabel<?= $t['id'] ?>">Edit Petugas</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form method="post" action="<?= Routes::base('petugas/edit') ?>">
-                                        <input type="hidden" name="id" value="<?= $p['id'] ?>">
+                                        <input type="hidden" name="id" value="<?= $t['id'] ?>">
                                         <div class="modal-body">
 
                                             <div class="mb-3">
@@ -91,7 +101,7 @@
                                                     <select class="form-select" id="biodata" name="id_biodata">
                                                         <option value="" disabled selected>Pilih biodata</option>
                                                         <?php foreach ($biodata as $b) : ?>
-                                                            <option value="<?= $b['id_biodata'] ?>" <?= $b['id_biodata'] == $p['id_biodata'] ? 'selected' : '' ?>><?= $b['nama'] ?></option>
+                                                            <option value="<?= $b['id_biodata'] ?>" <?= $b['id_biodata'] == $t['id_biodata'] ? 'selected' : '' ?>><?= $b['nama'] ?></option>
                                                         <?php endforeach; ?>
                                                     </select>
                                                     <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Tambah</button>
@@ -103,7 +113,7 @@
 
                                             <div class="mb-3">
                                                 <label for="username" class="form-label">Username</label>
-                                                <input class="form-control" id="username" name="username" value="<?= $p['username'] ?>" placeholder="Masukkan username">
+                                                <input class="form-control" id="username" name="username" value="<?= $t['username'] ?>" placeholder="Masukkan username">
                                                 <?php if (isset($_SESSION['errors']['username'])) : ?>
                                                     <p class="text-danger mt-1"><?= $_SESSION['errors']['username'] ?></p>
                                                 <?php endif; ?>
@@ -136,17 +146,17 @@
                         </div>
 
                         <!-- Hapus Modal -->
-                        <div class="modal fade" id="hapus<?= $p['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $p['id'] ?>" aria-hidden="true">
+                        <div class="modal fade" id="hapus<?= $t['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $t['id'] ?>" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="editLabel<?= $p['id'] ?>">Konfirmasi Hapus</h1>
+                                        <h1 class="modal-title fs-5" id="editLabel<?= $t['id'] ?>">Konfirmasi Hapus</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form method="post" action="<?= Routes::base('petugas/hapus') ?>">
 
                                         <div class="modal-body">
-                                            <input type="hidden" name="id" value="<?= $p['id'] ?>">
+                                            <input type="hidden" name="id" value="<?= $t['id'] ?>">
                                             <p class="text-center my-3">Apakah anda yakin ingin menghapus data ini?</p>
                                         </div>
 
