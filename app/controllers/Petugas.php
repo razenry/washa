@@ -5,6 +5,7 @@ class Petugas
     public function index()
     {
         UserModel::isLog();
+        header('Location:' . Routes::base('admin/petugas'));
     }
 
     public function tambah()
