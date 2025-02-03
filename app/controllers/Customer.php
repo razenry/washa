@@ -27,7 +27,7 @@ class Customer {
             'email' => $validatedData['email']
         ]);
 
-        if ($tambah) {
+        if ($tambah > 0) {
             $_SESSION['success'] = 'Data berhasil ditambahkan';
             header('Location: ' . Routes::base('admin/customer'));
         } else {
@@ -41,7 +41,30 @@ class Customer {
     {
         UserModel::isLog();
 
-        die(var_dump($_POST));
+        $validatedData = CustomerModel::validation($_POST);
+
+        if ($validatedData['errors']) {
+            $_SESSION['errors'] = $validatedData['errors'];
+            header('Location: ' . Routes::base('admin/customer'));
+            exit;
+        }
+
+        $update = DB::table('customer')
+            ->where('id', '=', $validatedData['id'])
+            ->update([
+                'nama' => $validatedData['nama'],
+                'alamat' => $validatedData['alamat'],
+                'notelp' => $validatedData['notelp'],
+                'email' => $validatedData['email']
+            ]);
+
+        if ($update > 0) {
+            $_SESSION['success'] = 'Data berhasil diubah';
+            header('Location: ' . Routes::base('admin/customer'));
+        } else {
+            $_SESSION['error'] = 'Data gagal diubah';
+            header('Location: ' . Routes::base('admin/customer'));
+        }
     }
 
     public function hapus()
@@ -52,7 +75,7 @@ class Customer {
 
         $hapus = DB::table('customer')->where('id', '=', $id)->delete();
 
-        if ($hapus) {
+        if ($hapus > 0) {
             $_SESSION['success'] = 'Data berhasil dihapus';
             header('Location: ' . Routes::base('admin/customer'));
         } else {

@@ -68,7 +68,7 @@
                                         <h1 class="modal-title fs-5" id="editLabel<?= $c['id'] ?>">Edit Biodata</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form method="post" action="<?= Routes::base('biodata/edit') ?>">
+                                    <form method="post" action="<?= Routes::base('customer/edit') ?>">
                                         <input type="hidden" name="id" value="<?= $c['id'] ?>">
                                         <div class="modal-body">
 
