@@ -43,7 +43,7 @@ class Admin
 
     public function petugas()
     {
-        UserModel::isLog();
+        UserModel::isLog("Admin");
 
         $data = [
             'title' => 'Data Petugas',

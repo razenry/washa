@@ -5,7 +5,7 @@ class UserModel
     public static function validationLogin($data)
     {
         if (!empty($data)) {
-            $data['errors']=[];
+            $data['errors'] = [];
             if ($data['username'] == null) {
                 $data['errors']['username'] = "Username harus di isi";
             }
@@ -26,11 +26,20 @@ class UserModel
         return $user;
     }
 
-    public static function isLog()
+    public static function isLog($apply = null)
     {
-        if (!isset($_SESSION['login'])) {
-            header('Location:'. Routes::base('admin/login'));
+        if ($apply == "Admin") {
+            if (isset($_SESSION['user'])) {
+                if ($_SESSION['user']['level'] == 'Admin') {
+                    return true;
+                }else{
+                    header('Location:' . Routes::base('admin/dashboard'));
+                }
+            }
+        } else {
+            if (!isset($_SESSION['user'])) {
+                header('Location:' . Routes::base('admin/login'));
+            }
         }
     }
-
 }
