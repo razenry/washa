@@ -54,6 +54,7 @@ class Petugas
 
     public function hapus()
     {
+        UserModel::isLog();
         $id = $_POST['id'];
         $delete = DB::table('akun')->where('id', '=', $id)->delete();
 

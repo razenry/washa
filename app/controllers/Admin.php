@@ -79,13 +79,21 @@ class Admin
 
         $anggota = DB::table('akun')
             ->select()
-            ->join('biodata_user', 'akun.id = biodata_user.id_biodata')
-            ->where("level", "=", "Anggota")
+            ->join('biodata_user', 'akun.id_biodata = biodata_user.id_biodata')
+            ->where('level', '=', 'Anggota')
             ->get();
+        DB::reset();
+
+        $biodata = DB::table('biodata_user')
+            ->select()
+            ->get();
+        DB::reset();
+
 
         $data = [
             'title' => 'Data Anggota',
             'anggota' => $anggota,
+            'biodata' => $biodata,
             'errors' => $_SESSION['errors'] ?? null
         ];
 

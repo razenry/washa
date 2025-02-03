@@ -34,7 +34,7 @@
 
                         <div class="offcanvas offcanvas-end" tabindex="-1" id="detail<?= $a['id'] ?>" aria-labelledby="detailLabel">
                             <div class="offcanvas-header">
-                                <h5 class="offcanvas-title" id="detailLabel">Detail petugas</h5>
+                                <h5 class="offcanvas-title" id="detailLabel">Detail anggota</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
                             <div class="offcanvas-body">
@@ -81,7 +81,7 @@
                                         <h1 class="modal-title fs-5" id="editLabel<?= $a['id'] ?>">Edit Petugas</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form method="post" action="<?= Routes::base('petugas/edit') ?>">
+                                    <form method="post" action="<?= Routes::base('anggota/edit') ?>">
                                         <input type="hidden" name="id" value="<?= $a['id'] ?>">
                                         <div class="modal-body">
 
@@ -143,7 +143,7 @@
                                         <h1 class="modal-title fs-5" id="editLabel<?= $a['id'] ?>">Konfirmasi Hapus</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form method="post" action="<?= Routes::base('petugas/hapus') ?>">
+                                    <form method="post" action="<?= Routes::base('anggota/hapus') ?>">
 
                                         <div class="modal-body">
                                             <input type="hidden" name="id" value="<?= $a['id'] ?>">
