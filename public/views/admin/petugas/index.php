@@ -26,7 +26,7 @@
                             <td class="d-flex justify-content-center gap-3 align-items-center">
                                 <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#detail<?= $p['id'] ?>" aria-controls="detail">Detail</button>
                                 <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $p['id'] ?>">Edit</button>
-                                <button class="btn btn-danger">Hapus</button>
+                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $p['id'] ?>">Hapus</button>
                             </td>
                         </tr>
 
@@ -82,7 +82,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form method="post" action="<?= Routes::base('petugas/edit') ?>">
-                                    <input type="hidden" name="id" value="<?= $p['id'] ?>">
+                                        <input type="hidden" name="id" value="<?= $p['id'] ?>">
                                         <div class="modal-body">
 
                                             <div class="mb-3">
@@ -135,6 +135,30 @@
                             </div>
                         </div>
 
+                        <!-- Hapus Modal -->
+                        <div class="modal fade" id="hapus<?= $p['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $p['id'] ?>" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="editLabel<?= $p['id'] ?>">Konfirmasi Hapus</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form method="post" action="<?= Routes::base('petugas/hapus') ?>">
+
+                                        <div class="modal-body">
+                                            <input type="hidden" name="id" value="<?= $p['id'] ?>">
+                                            <p class="text-center my-3">Apakah anda yakin ingin menghapus data ini?</p>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                            <button type="submit" class="btn btn-danger">Ya Hapus!</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
                     <?php endforeach; ?>
                 </tbody>
             </table>
@@ -145,7 +169,7 @@
         <div class="card p-4 shadow-sm">
             <h4 class="my-2 mb-3 text-center">Tambah Petugas</h4>
             <form class="" method="post" action="<?= Routes::base('petugas/tambah') ?>">
-            
+
                 <div class="mb-3">
                     <label for="searchBiodata" class="form-label">Biodata</label>
                     <div class="input-group">

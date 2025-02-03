@@ -47,7 +47,22 @@ class Petugas
         } else {
 
             echo $_SESSION['errors'] = "Data gagal di diubah";
-            // header('Location: ' . Routes::base('admin/petugas'));
+            header('Location: ' . Routes::base('admin/petugas'));
+        }
+    }
+
+    public function hapus()
+    {
+        $id = $_POST['id'];
+        $delete = DB::table('akun')->where('id', '=', $id)->delete();
+
+        if ($delete > 0) {
+            $_SESSION['success'] = "Data berhasil di hapus";
+            header('Location: ' . Routes::base('admin/petugas'));
+        } else {
+
+            echo $_SESSION['errors'] = "Data gagal di hapus";
+            header('Location: ' . Routes::base('admin/petugas'));
         }
     }
 }
