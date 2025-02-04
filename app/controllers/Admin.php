@@ -41,6 +41,26 @@ class Admin
         App::view('admin/transaksi/index', $data, 'admin/app');
     }
 
+    public function detail_transaksi($params)
+    {
+        UserModel::isLog();
+
+        $id_transaksi = $params[0];
+        
+        $detail_transaksi = DB::table('detail_transaksi dt')
+            ->select(" dt.id_detail_transaksi, dt.berat, dt.harga_satuan, dt.total_harga, tr.id_transaksi, tr.status, tr.tgl_transaksi, tr.waktu_transaksi, jc.harga as harga_jenis_cucian, jc.nama as nama_jenis_cucian, cs.id as id_customer, cs.nama as nama_customer, cs.alamat, cs.email")
+            ->join('transaksi tr', 'dt.id_transaksi = tr.id_transaksi')
+            ->join('jenis_cucian jc', 'dt.id_jenis_cucian = jc.id_jenis_cucian')
+            ->join('customer cs', 'tr.id_customer = cs.id')
+            ->where('dt.id_transaksi', '=', $id_transaksi)
+            ->get();
+
+        $data = [
+            'title' => 'Detail Transaksi ',
+        ];
+        App::view('admin/detail_transaksi/index', $data, 'admin/app');
+    }
+
     public function petugas()
     {
         UserModel::isLog("Admin");
