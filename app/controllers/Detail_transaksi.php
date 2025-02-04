@@ -68,11 +68,27 @@ class Detail_transaksi
 
             if ($status_pembayaran > 0) {
                 header('Location:' . Routes::base('admin/transaksi'));
-            }else{
+            } else {
                 header('Location:' . Routes::base('admin/transaksi'));
             }
-        }else{
+        } else {
             header('Location:' . Routes::base('admin/transaksi'));
+        }
+    }
+
+    public function hapus()
+    {
+        $id_dt = htmlspecialchars($_POST['id_detail_transaksi']);
+        $kode_trans = htmlspecialchars($_POST['kode_trans']);
+
+        $hapus = DB::table('detail_transaksi')
+            ->where('id_detail_transaksi', '=', $id_dt)
+            ->delete();
+        DB::reset();
+
+        if ($hapus > 0) {
+            $_SESSION['success'] = "Berhasil hapus data";
+            header('Location:' . Routes::base("admin/detail_transaksi/$kode_trans"));
         }
     }
 }

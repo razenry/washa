@@ -39,7 +39,8 @@
                         <form method="post" action="<?= Routes::base('detail_transaksi/hapus') ?>">
 
                             <div class="modal-body">
-                                <input type="hidden" name="id" value="<?= $dt['id_detail_transaksi'] ?>">
+                                <input type="hidden" name="id_detail_transaksi" value="<?= $dt['id_detail_transaksi'] ?>">
+                                <input type="hidden" name="kode_trans" value="<?= $dt['kode_trans'] ?>">
                                 <p class="text-center my-3">Apakah anda yakin ingin menghapus data ini?</p>
                             </div>
 
