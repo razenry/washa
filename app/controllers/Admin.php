@@ -198,6 +198,54 @@ class Admin
         App::view('admin/profile/index', $data, 'admin/app');
     }
 
+    public function laporan_pekerjaan()
+    {
+        UserModel::isLog();
+
+        $detail_transaksi = DB::table('detail_transaksi dt')
+            ->select(" dt.id_detail_transaksi, dt.berat, dt.harga_satuan, dt.total_harga, tr.id_transaksi, tr.kode_trans, tr.status_transaksi, tr.tgl_transaksi, tr.waktu_transaksi, jc.harga as harga_jenis_cucian, jc.nama as nama_jenis_cucian, cs.id as id_customer, cs.nama as nama_customer, cs.alamat, cs.email, a.username as username_petugas, bu.nama as nama_petugas, dt.harga_satuan * dt.berat as harga")
+            ->join('transaksi tr', 'dt.id_transaksi = tr.id_transaksi')
+            ->join('akun a', 'tr.id_petugas = a.id')
+            ->join('biodata_user bu', 'a.id_biodata = bu.id_biodata')
+            ->join('jenis_cucian jc', 'dt.id_jenis_cucian = jc.id_jenis_cucian')
+            ->join('customer cs', 'tr.id_customer = cs.id')
+            ->where('tr.status_transaksi', '=', '5')
+            ->get();
+        DB::reset();
+
+        $data = [
+            'title' => 'Laporan Pekerjaan ',
+            'laporan_pekerjaan' => $detail_transaksi,
+            'errors' => $_SESSION['errors'] ?? null
+        ];
+
+        App::view('admin/laporan_pekerjaan/index', $data, 'admin/app');
+    }
+
+    public function laporan_keuangan()
+    {
+        UserModel::isLog();
+
+        $detail_transaksi = DB::table('detail_transaksi dt')
+            ->select(" dt.id_detail_transaksi, dt.berat, dt.harga_satuan, dt.total_harga, tr.id_transaksi, tr.kode_trans, tr.status_transaksi, tr.tgl_transaksi, tr.waktu_transaksi, jc.harga as harga_jenis_cucian, jc.nama as nama_jenis_cucian, cs.id as id_customer, cs.nama as nama_customer, cs.alamat, cs.email, a.username as username_petugas, bu.nama as nama_petugas, dt.harga_satuan * dt.berat as harga")
+            ->join('transaksi tr', 'dt.id_transaksi = tr.id_transaksi')
+            ->join('akun a', 'tr.id_petugas = a.id')
+            ->join('biodata_user bu', 'a.id_biodata = bu.id_biodata')
+            ->join('jenis_cucian jc', 'dt.id_jenis_cucian = jc.id_jenis_cucian')
+            ->join('customer cs', 'tr.id_customer = cs.id')
+            ->where('tr.status_transaksi', '=', '5')
+            ->get();
+        DB::reset();
+
+        $data = [
+            'title' => 'Laporan Keuangan',
+            'laporan_keuangan' => $detail_transaksi,
+            'errors' => $_SESSION['errors'] ?? null
+        ];
+
+        App::view('admin/laporan_keuangan/index', $data, 'admin/app');
+    }
+
     public function update()
     {
 

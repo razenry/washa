@@ -35,6 +35,15 @@
               <li><a class="dropdown-item" href="<?= Routes::base('admin/jenis_cucian') ?>">Jenis Cucian</a></li>
             </ul>
           </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Laporan
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="<?= Routes::base('admin/laporan_pekerjaan') ?>">Laporan Pekerjaan</a></li>
+              <li><a class="dropdown-item" href="<?= Routes::base('admin/laporan_keuangan') ?>">Laporan Keuangan</a></li>
+            </ul>
+          </li>
         <?php endif; ?>
 
       </ul>

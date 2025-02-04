@@ -65,7 +65,7 @@
                         <form class="" method="post" action="<?= Routes::base('detail_transaksi/pembayaran') ?>">
                             <div class="modal-body">
 
-                                <input type="hidden" name="id_detail_transaksi" value="<?= $dt['id_detail_transaksi_detail_transaksi'] ?>">
+                                <input type="hidden" name="id_detail_transaksi" value="<?= $dt['id_detail_transaksi'] ?>">
 
                                 <div class=" rounded-3 my-3">
                                     <h5 class="text-muted">Total Pembayaran</h5>
