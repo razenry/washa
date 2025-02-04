@@ -9,8 +9,7 @@
                 <thead>
                     <tr>
                         <th>NO.</th>
-                        <th>Tgl. Transaksi</th>
-                        <th>Waktu</th>
+                        <th>Customer</th>
                         <th>Status</th>
                         <th class="text-center">Aksi</th>
                     </tr>
@@ -20,91 +19,52 @@
                     foreach ($transaksi as $key => $t) : ?>
                         <tr>
                             <td><?= $i++ ?></td>
-                            <td><?= DateHelper::formatIndonesianDate($t['tgl_transaksi']) ?></td>
-                            <td><?= DateHelper::formatTime($t['waktu_transaksi']) ?></td>
-                            <td><?php
-                                if ($t['status'] == 1) {
-                                    echo 'Dalam Antrean';
-                                } else if ($t['status'] == 2) {
-                                    echo 'Di proses';
-                                } else if ($t['status'] == 3) {
-                                    echo 'Di cuci';
-                                }else  if ($t['status'] == 4) {
-                                    echo 'Di jemur';
-                                }else if ($t['status'] == 5) {
-                                    echo 'Selesai';
-                                }else{
-                                    echo 'Pending';
-                                }
-                                ?></td>
+                            <td><?= $t['nama'] ?></td>
+                            <td>
+                                <span>
+                                    <?php
+                                    if ($t['status'] == 1) {
+                                        echo 'Dalam Antrean';
+                                    } else if ($t['status'] == 2) {
+                                        echo 'Di proses';
+                                    } else if ($t['status'] == 3) {
+                                        echo 'Di cuci';
+                                    } else  if ($t['status'] == 4) {
+                                        echo 'Di jemur';
+                                    } else if ($t['status'] == 5) {
+                                        echo 'Selesai';
+                                    } else {
+                                        echo 'Pending';
+                                    }
+                                    ?>
+                                </span>
+
+                            </td>
                             <td class="d-flex justify-content-center gap-3 align-items-center">
-                                <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#detail<?= $t['id'] ?>" aria-controls="detail">Detail</button>
-                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $t['id'] ?>">Edit</button>
-                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $t['id'] ?>">Hapus</button>
+                                <a class="btn btn-info" href="<?= Routes::base('admin/detail_transaksi/') . $t['id_transaksi']  ?>">Detail</a>
+                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $t['id_transaksi'] ?>">Edit</button>
+                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $t['id_transaksi'] ?>">Hapus</button>
                             </td>
                         </tr>
 
-                        <!-- Detail Modal -->
-
-                        <div class="offcanvas offcanvas-end" tabindex="-1" id="detail<?= $t['id'] ?>" aria-labelledby="detailLabel">
-                            <div class="offcanvas-header">
-                                <h5 class="offcanvas-title" id="detailLabel">Detail petugas</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                            </div>
-                            <div class="offcanvas-body">
-                                <div class="mb-3">
-                                    <label for="nama" class="form-label">Nama</label>
-                                    <input type="text" class="form-control" disabled readonly value="<?= $t['nama'] ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" disabled readonly value="<?= $t['username'] ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="text" class="form-control" disabled readonly value="<?= $t['email'] ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="level" class="form-label">Level</label>
-                                    <input type="text" class="form-control" disabled readonly value="<?= $t['level'] ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="notelp" class="form-label">No telp.</label>
-                                    <input type="text" class="form-control" disabled readonly value="<?= $t['notelp'] ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="notelp" class="form-label">Status</label>
-                                    <input type="text" class="form-control" disabled readonly value="<?= $t['status'] == 1 ? 'Aktif' : 'Tidak Aktif' ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="notelp" class="form-label">Alamat</label>
-                                    <textarea type="text" class="form-control" disabled readonly><?= $t['alamat'] ?></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="notelp" class="form-label">Dibuat</label>
-                                    <input type="text" class="form-control" disabled readonly value="<?= DateHelper::formatIndonesianDateTime($t['dibuat']) ?>">
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Edit Modal -->
-                        <div class="modal fade" id="edit<?= $t['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $t['id'] ?>" aria-hidden="true">
+                        <div class="modal fade" id="edit<?= $t['id_transaksi'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $t['id'] ?>" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="editLabel<?= $t['id'] ?>">Edit Petugas</h1>
+                                        <h1 class="modal-title fs-5" id="editLabel<?= $t['id'] ?>">Edit Transaksi</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form method="post" action="<?= Routes::base('petugas/edit') ?>">
-                                        <input type="hidden" name="id" value="<?= $t['id'] ?>">
+                                    <form method="post" action="<?= Routes::base('transaksi/edit') ?>">
+                                        <input type="hidden" name="id_transaksi" value="<?= $t['id_transaksi'] ?>">
                                         <div class="modal-body">
 
                                             <div class="mb-3">
-                                                <label for="biodata" class="form-label">Biodata</label>
+                                                <label for="biodata" class="form-label">Customer</label>
                                                 <div class="input-group">
-                                                    <select class="form-select" id="biodata" name="id">
+                                                    <select class="form-select" id="biodata" name="id_customer">
                                                         <option value="" disabled selected>Pilih biodata</option>
-                                                        <?php foreach ($biodata as $b) : ?>
+                                                        <?php foreach ($customer as $b) : ?>
                                                             <option value="<?= $b['id'] ?>" <?= $b['id'] == $t['id'] ? 'selected' : '' ?>><?= $b['nama'] ?></option>
                                                         <?php endforeach; ?>
                                                     </select>
@@ -116,57 +76,48 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="username" class="form-label">Username</label>
-                                                <input class="form-control" id="username" name="username" value="<?= $t['username'] ?>" placeholder="Masukkan username">
-                                                <?php if (isset($_SESSION['errors']['username'])) : ?>
-                                                    <p class="text-danger mt-1"><?= $_SESSION['errors']['username'] ?></p>
+                                                <label for="tgl_transaksi" class="form-label">Tanggal Transaksi</label>
+                                                <input class="form-control" type="date" id="tgl_transaksi" name="tgl_transaksi" value="<?= $t['tgl_transaksi'] ?>">
+                                                <?php if (isset($_SESSION['errors']['tgl_transaksi'])) : ?>
+                                                    <p class="text-danger mt-1"><?= $_SESSION['errors']['tgl_transaksi'] ?></p>
                                                 <?php endif; ?>
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="password" class="form-label">Password</label>
-                                                <input class="form-control" type="password" name="password" id="password" placeholder="********">
-                                                <?php if (isset($_SESSION['errors']['password'])) : ?>
-                                                    <p class="text-danger mt-1"><?= $_SESSION['errors']['password'] ?></p>
+                                                <label for="waktu_transaksi" class="form-label">Waktu Transaksi</label>
+                                                <input class="form-control" type="time" id="waktu_transaksi" name="waktu_transaksi" value="<?= $t['waktu_transaksi'] ?>">
+                                                <?php if (isset($_SESSION['errors']['waktu_transaksi'])) : ?>
+                                                    <p class="text-danger mt-1"><?= $_SESSION['errors']['waktu_transaksi'] ?></p>
                                                 <?php endif; ?>
                                             </div>
 
-                                            <div class="mb-3">
-                                                <label for="verifikasi_password" class="form-label">Konfirmasi Password</label>
-                                                <input class="form-control" type="password" name="verifikasi_password" id="verifikasi_password" placeholder="********">
-                                                <?php if (isset($_SESSION['errors']['verifikasi_password'])) : ?>
-                                                    <p class="text-danger mt-1"><?= $_SESSION['errors']['verifikasi_password'] ?></p>
-                                                <?php endif; ?>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                <button type="submit" class="btn btn-warning">Update</button>
                                             </div>
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                            <button type="submit" class="btn btn-warning">Update</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Hapus Modal -->
-                        <div class="modal fade" id="hapus<?= $t['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $t['id'] ?>" aria-hidden="true">
+                        <div class="modal fade" id="hapus<?= $t['id_transaksi'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $t['id'] ?>" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="editLabel<?= $t['id'] ?>">Konfirmasi Hapus</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form method="post" action="<?= Routes::base('petugas/hapus') ?>">
-
+                                    <form method="post" action="<?= Routes::base('transaksi/edit') ?>">
+                                        <input type="hidden" name="id_transaksi" value="<?= $t['id_transaksi'] ?>">
                                         <div class="modal-body">
-                                            <input type="hidden" name="id" value="<?= $t['id'] ?>">
+                                            <input type="hidden" name="id" value="<?= $p['id'] ?>">
                                             <p class="text-center my-3">Apakah anda yakin ingin menghapus data ini?</p>
                                         </div>
 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                            <button type="submit" class="btn btn-danger">Ya Hapus!</button>
+                                            <button type="submit" class="btn btn-danger">Ya, Hapus!</button>
                                         </div>
                                     </form>
                                 </div>
@@ -226,7 +177,7 @@
                     <?php endif;  ?>
                 </div>
 
-                
+
 
                 <div class="mb-3">
                     <button class="btn btn-primary" type="submit" name="tambah">Tambah</button>
@@ -242,10 +193,10 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Biodata</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Customer</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="" method="post" action="<?= Routes::base('biodata/tambah') ?>">
+            <form class="" method="post" action="<?= Routes::base('customer/tambah_customer') ?>">
                 <div class="modal-body">
 
                     <div class="mb-3">
