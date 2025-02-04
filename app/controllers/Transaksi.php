@@ -85,6 +85,8 @@ class Transaksi
 
         $checkIdCustomer = DB::table('transaksi')->select()->where('id_transaksi', '=', $validatedData['id_transaksi'])->single();
 
+
+
         if ($validatedData['id_customer'] == $checkIdCustomer['id_customer']) {
             $kodeTrans = $checkIdCustomer['kode_trans'];
         } else {
@@ -116,13 +118,15 @@ class Transaksi
             'id_petugas' => $validatedData['id_petugas'],
             'status' => $validatedData['status'],
         ]);
+
         DB::reset();
 
         if ($update > 0) {
             $_SESSION['success'] = "Berhasil menambah data";
             header('Location:' . Routes::base('admin/transaksi'));
         } else {
-            echo $_SESSION['errors'] = "Gagal menambah data";
+            $_SESSION['errors'] = "Gagal menambah data";
+            header('Location:'. Routes::base('admin/transaksi'));
         }
     }
 }
