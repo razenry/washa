@@ -47,7 +47,7 @@
 
                             </td>
                             <td class="d-flex justify-content-center gap-3 align-items-center">
-                                <a class="btn btn-info" href="<?= Routes::base('admin/detail_transaksi/') . $t['id_transaksi']  ?>">Detail</a>
+                                <a class="btn btn-info" href="<?= Routes::base('admin/detail_transaksi/') . $t['kode_trans']  ?>">Detail</a>
                                 <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $t['id_transaksi'] ?>">Edit</button>
                                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $t['id_transaksi'] ?>">Hapus</button>
                             </td>
