@@ -129,4 +129,47 @@ class Transaksi
             header('Location:'. Routes::base('admin/transaksi'));
         }
     }
+
+    public function hapus()
+    {
+        UserModel::isLog();
+
+        $id_transaksi = $_POST['id_transaksi'];
+
+        $hapus = DB::table('transaksi')
+        ->where('id_transaksi', '=', $id_transaksi)
+        ->delete();
+        DB::reset();
+
+        if ($hapus > 0) {
+            $_SESSION['success']="Berhasil Hapus Data";
+            header('Location:' . Routes::base('admin/transaksi'));
+        }else{
+            echo "Gagal hapus";
+        }
+
+    }
+
+    public function status()
+    {
+        UserModel::isLog();
+
+        $data = [
+            'id_transaksi' => htmlspecialchars($_POST['id_transaksi']),
+            'status_transaksi' => htmlspecialchars($_POST['status_transaksi'])
+        ];
+
+        $status_transaksi = DB::table('transaksi')
+        ->where('id_transaksi', '=', $data['id_transaksi'])
+        ->update([
+            'status_transaksi' => $data['status_transaksi']
+        ]);
+
+        if ($status_transaksi > 0) {
+            $_SESSION['success'] = "Status transaksi berhasil diubah";
+            header('Location:' . Routes::base('admin/transaksi'));
+        }
+
+    }
+
 }

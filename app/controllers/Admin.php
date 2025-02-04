@@ -40,6 +40,7 @@ class Admin
             'transaksi' => $transaksi,
             'customer' => $customer,
         ];
+
         App::view('admin/transaksi/index', $data, 'admin/app');
     }
 
@@ -50,18 +51,39 @@ class Admin
         $kode_trans = $params[0];
 
         $detail_transaksi = DB::table('detail_transaksi dt')
-            ->select(" dt.id_detail_transaksi, dt.berat, dt.harga_satuan, dt.total_harga, tr.id_transaksi, tr.kode_trans, tr.status, tr.tgl_transaksi, tr.waktu_transaksi, jc.harga as harga_jenis_cucian, jc.nama as nama_jenis_cucian, cs.id as id_customer, cs.nama as nama_customer, cs.alamat, cs.email")
+            ->select(" dt.id_detail_transaksi, dt.berat, dt.harga_satuan, dt.total_harga, tr.id_transaksi, tr.kode_trans, tr.status_transaksi, tr.tgl_transaksi, tr.waktu_transaksi, jc.harga as harga_jenis_cucian, jc.nama as nama_jenis_cucian, cs.id as id_customer, cs.nama as nama_customer, cs.alamat, cs.email")
             ->join('transaksi tr', 'dt.id_transaksi = tr.id_transaksi')
             ->join('jenis_cucian jc', 'dt.id_jenis_cucian = jc.id_jenis_cucian')
             ->join('customer cs', 'tr.id_customer = cs.id')
-            ->where('dt.id_transaksi', '=', $kode_trans)
+            ->where('tr.kode_trans', '=', $kode_trans)
             ->get();
         DB::reset();
 
+        $transaksi = DB::table('transaksi')
+            ->select()
+            ->where('kode_trans', '=', $kode_trans)
+            ->join('customer', 'transaksi.id_customer = customer.id')
+            ->single();
+        DB::reset();
+
+        $jenis_cucian = DB::table('jenis_cucian')
+            ->select()
+            ->get();
+        DB::reset();
+
+        $total_harga = DB::table('detail_transaksi')
+            ->where('id_transaksi', '=', $transaksi['id_transaksi'])
+            ->sum('total_harga');
+        DB::reset();
+
         $data = [
-            'title' => 'Detail Transaksi ',
+            'title' => 'Detail Transaksi ' . $transaksi['kode_trans'],
+            'transaksi' => $transaksi,
+            'jenis_cucian' => $jenis_cucian,
+            'total_harga' => $total_harga,
             'detail_transaksi' => $detail_transaksi
         ];
+
         App::view('admin/detail_transaksi/index', $data, 'admin/app');
     }
 

@@ -88,4 +88,31 @@ class DateHelper
                 return 'Unknown';
         }
     }
+
+    public static function timeAgo($datetime)
+    {
+        // Membuat objek DateTime dari waktu yang diberikan
+        $date = new DateTime($datetime);
+        
+        // Mendapatkan waktu sekarang
+        $now = new DateTime();
+
+        // Menghitung selisih antara waktu sekarang dan waktu yang diberikan
+        $interval = $now->diff($date);
+
+        // Mengonversi selisih waktu ke dalam bentuk yang mudah dipahami
+        if ($interval->y > 0) {
+            return $interval->y . ' tahun yang lalu';
+        } elseif ($interval->m > 0) {
+            return $interval->m . ' bulan yang lalu';
+        } elseif ($interval->d > 0) {
+            return $interval->d . ' hari yang lalu';
+        } elseif ($interval->h > 0) {
+            return $interval->h . ' jam yang lalu';
+        } elseif ($interval->i > 0) {
+            return $interval->i . ' menit yang lalu';
+        } else {
+            return 'baru saja';
+        }
+    }
 }

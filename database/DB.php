@@ -129,6 +129,24 @@ class DB
         return $stmt->fetchColumn() !== false;
     }
 
+    public static function sum($column)
+    {
+        $query = "SELECT SUM($column) FROM " . self::$table;
+
+        if (count(self::$join) > 0) {
+            $query .= " " . implode(" ", self::$join);
+        }
+
+        if (count(self::$where) > 0) {
+            $query .= " WHERE " . implode(" AND ", self::$where);
+        }
+
+        $stmt = self::$pdo->prepare($query);
+        $stmt->execute(self::$values);
+
+        return $stmt->fetchColumn();
+    }
+
 
     public static function update($data)
     {
