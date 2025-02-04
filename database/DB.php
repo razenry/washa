@@ -1,6 +1,7 @@
 <?php
 
-class DB {
+class DB
+{
     private static $pdo;
     private static $table;
     private static $select = '*';
@@ -10,7 +11,8 @@ class DB {
     private static $limit = null;
     private static $values = [];
 
-    public static function connect($host, $dbname, $username, $password) {
+    public static function connect($host, $dbname, $username, $password)
+    {
         try {
             self::$pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
             self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -19,40 +21,47 @@ class DB {
         }
     }
 
-    public static function table($table) {
+    public static function table($table)
+    {
         self::$table = $table;
         return new static;
     }
 
-    public static function select($columns = '*') {
+    public static function select($columns = '*')
+    {
         self::$select = is_array($columns) ? implode(", ", $columns) : $columns;
         return new static;
     }
 
-    public static function where($column, $operator, $value) {
+    public static function where($column, $operator, $value)
+    {
         self::$where[] = "$column $operator ?";
         self::$values[] = $value;
         return new static;
     }
 
-    public static function join($table, $condition) {
+    public static function join($table, $condition)
+    {
         self::$join[] = "JOIN $table ON $condition";
         return new static;
     }
 
-    public static function orderBy($column, $direction = 'ASC') {
+    public static function orderBy($column, $direction = 'ASC')
+    {
         self::$orderBy[] = "$column $direction";
         return new static;
     }
 
-    public static function limit($limit) {
+    public static function limit($limit)
+    {
         self::$limit = $limit;
         return new static;
     }
 
-    private static function buildSelectQuery() {
+    private static function buildSelectQuery()
+    {
         $query = "SELECT " . self::$select . " FROM " . self::$table;
-        
+
         if (count(self::$join) > 0) {
             $query .= " " . implode(" ", self::$join);
         }
@@ -72,32 +81,57 @@ class DB {
         return $query;
     }
 
-    public static function get() {
+    public static function get()
+    {
         $query = self::buildSelectQuery();
         $stmt = self::$pdo->prepare($query);
         $stmt->execute(self::$values);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function single() {
+    public static function single()
+    {
         $query = self::buildSelectQuery();
         $stmt = self::$pdo->prepare($query);
         $stmt->execute(self::$values);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public static function insert($data) {
+    public static function insert($data)
+    {
         $columns = implode(", ", array_keys($data));
         $placeholders = implode(", ", array_fill(0, count($data), "?"));
         $query = "INSERT INTO " . self::$table . " ($columns) VALUES ($placeholders)";
-        
+
         $stmt = self::$pdo->prepare($query);
         $stmt->execute(array_values($data));
-        
+
         return self::$pdo->lastInsertId();
     }
 
-    public static function update($data) {
+    public static function exists()
+    {
+        $query = "SELECT 1 FROM " . self::$table;
+
+        if (count(self::$join) > 0) {
+            $query .= " " . implode(" ", self::$join);
+        }
+
+        if (count(self::$where) > 0) {
+            $query .= " WHERE " . implode(" AND ", self::$where);
+        }
+
+        $query .= " LIMIT 1"; // Batasi ke 1 baris saja untuk efisiensi
+
+        $stmt = self::$pdo->prepare($query);
+        $stmt->execute(self::$values);
+        self::reset();
+        return $stmt->fetchColumn() !== false;
+    }
+
+
+    public static function update($data)
+    {
         $set = [];
         $updateValues = [];
         foreach ($data as $column => $value) {
@@ -119,7 +153,8 @@ class DB {
         return $affectedRows;
     }
 
-    public static function delete() {
+    public static function delete()
+    {
         $query = "DELETE FROM " . self::$table;
 
         if (count(self::$where) > 0) {
@@ -132,9 +167,10 @@ class DB {
         return $stmt->rowCount();
     }
 
-    public static function count() {
+    public static function count()
+    {
         $query = "SELECT COUNT(*) FROM " . self::$table;
-        
+
         if (count(self::$join) > 0) {
             $query .= " " . implode(" ", self::$join);
         }
@@ -145,13 +181,14 @@ class DB {
 
         $stmt = self::$pdo->prepare($query);
         $stmt->execute(self::$values);
-        
+
         return $stmt->fetchColumn();
     }
 
-    public static function max($column) {
+    public static function max($column)
+    {
         $query = "SELECT MAX($column) FROM " . self::$table;
-        
+
         if (count(self::$join) > 0) {
             $query .= " " . implode(" ", self::$join);
         }
@@ -162,13 +199,14 @@ class DB {
 
         $stmt = self::$pdo->prepare($query);
         $stmt->execute(self::$values);
-        
+
         return $stmt->fetchColumn();
     }
 
-    public static function min($column) {
+    public static function min($column)
+    {
         $query = "SELECT MIN($column) FROM " . self::$table;
-        
+
         if (count(self::$join) > 0) {
             $query .= " " . implode(" ", self::$join);
         }
@@ -179,11 +217,12 @@ class DB {
 
         $stmt = self::$pdo->prepare($query);
         $stmt->execute(self::$values);
-        
+
         return $stmt->fetchColumn();
     }
 
-    public static function reset() {
+    public static function reset()
+    {
         self::$select = '*';
         self::$where = [];
         self::$join = [];

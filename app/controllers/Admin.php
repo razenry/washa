@@ -25,6 +25,8 @@ class Admin
             ->select()
             ->join('akun', 'transaksi.id_petugas = akun.id')
             ->join('customer', 'transaksi.id_customer = customer.id')
+            ->where('id_petugas', '=', $_SESSION['user']['id'])
+            ->orderBy('id_transaksi', 'DESC')
             ->get();
         DB::reset();
 

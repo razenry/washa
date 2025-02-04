@@ -10,7 +10,7 @@
                     <tr>
                         <th>NO.</th>
                         <th>Customer</th>
-                        <th>Status</th>
+                        <th class="text-center">Status</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -36,6 +36,12 @@
                                     } else {
                                         echo 'Pending';
                                     }
+                                    echo ' - ';
+                                    if ($t['status_pembayaran'] == 1) {
+                                        echo 'Di bayar';
+                                    } else {
+                                        echo 'Belum Di bayar';
+                                    }
                                     ?>
                                 </span>
 
@@ -57,6 +63,7 @@
                                     </div>
                                     <form method="post" action="<?= Routes::base('transaksi/edit') ?>">
                                         <input type="hidden" name="id_transaksi" value="<?= $t['id_transaksi'] ?>">
+                                        <input type="hidden" name="id_petugas" value="<?= $t['id_petugas'] ?>">
                                         <div class="modal-body">
 
                                             <div class="mb-3">
