@@ -22,23 +22,29 @@
                             <td><?= $i++ ?></td>
                             <td><?= $t['nama'] ?></td>
                             <td class="text-center">
-                                <span>
-
                                     <?php
                                     if ($t['status_transaksi'] == 1) {
-                                        echo 'Dalam Antrean';
+                                        $span = "info";
+                                        $status = 'Dalam Antrean';
                                     } else if ($t['status_transaksi'] == 2) {
-                                        echo 'Di proses';
+                                        $span = "primary";
+                                        $status = 'Di proses';
                                     } else if ($t['status_transaksi'] == 3) {
-                                        echo 'Di cuci';
+                                        $span = "primary";
+                                        $status = 'Di cuci';
                                     } else  if ($t['status_transaksi'] == 4) {
-                                        echo 'Di jemur';
+                                        $span = "warning";
+                                        $status = 'Di jemur';
                                     } else if ($t['status_transaksi'] == 5) {
-                                        echo 'Selesai';
+                                        $span = "success";
+                                        $status = 'Selesai';
                                     } else if ($t['status_transaksi'] == 0) {
-                                        echo 'Menunggu';
+                                        $span = "secondary";
+                                        $status = 'Menunggu';
                                     }
                                     ?>
+                                <span class="p-1 mt-2 px-2 rounded-3 text-white bg-<?= $span ?>">
+                                    <?= $status ?>
                                 </span>
                             </td>
                             <td class="text-center">

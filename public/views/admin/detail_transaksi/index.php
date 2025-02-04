@@ -28,129 +28,60 @@
                 </td>
             </tr>
 
-            <!-- Detail Modal -->
-
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="detail<?= $dt['id'] ?>" aria-labelledby="detailLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="detailLabel">Detail petugas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <div class="mb-3">
-                        <label for="nama" class="form-label">Nama</label>
-                        <input type="text" class="form-control" disabled readonly value="<?= $dt['nama'] ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" disabled readonly value="<?= $dt['username'] ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="text" class="form-control" disabled readonly value="<?= $dt['email'] ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="level" class="form-label">Level</label>
-                        <input type="text" class="form-control" disabled readonly value="<?= $dt['level'] ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="notelp" class="form-label">No telp.</label>
-                        <input type="text" class="form-control" disabled readonly value="<?= $dt['notelp'] ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="notelp" class="form-label">Status</label>
-                        <input type="text" class="form-control" disabled readonly value="<?= $dt['status'] == 1 ? 'Aktif' : 'Tidak Aktif' ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="notelp" class="form-label">Alamat</label>
-                        <textarea type="text" class="form-control" disabled readonly><?= $dt['alamat'] ?></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="notelp" class="form-label">Dibuat</label>
-                        <input type="text" class="form-control" disabled readonly value="<?= DateHelper::formatIndonesianDateTime($dt['dibuat']) ?>">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Edit Modal -->
-            <div class="modal fade" id="edit<?= $dt['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $dt['id'] ?>" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="editLabel<?= $dt['id'] ?>">Edit Petugas</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form method="post" action="<?= Routes::base('petugas/edit') ?>">
-                            <input type="hidden" name="id" value="<?= $dt['id'] ?>">
-                            <div class="modal-body">
-
-                                <div class="mb-3">
-                                    <label for="biodata" class="form-label">Biodata</label>
-                                    <div class="input-group">
-                                        <select class="form-select" id="biodata" name="id">
-                                            <option value="" disabled selected>Pilih biodata</option>
-                                            <?php foreach ($biodata as $b) : ?>
-                                                <option value="<?= $b['id'] ?>" <?= $b['id'] == $dt['id'] ? 'selected' : '' ?>><?= $b['nama'] ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Tambah</button>
-                                    </div>
-                                    <?php if (isset($_SESSION['errors']['id'])) : ?>
-                                        <p class="text-danger mt-1"><?= $_SESSION['errors']['id'] ?></p>
-                                    <?php endif; ?>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input class="form-control" id="username" name="username" value="<?= $dt['username'] ?>" placeholder="Masukkan username">
-                                    <?php if (isset($_SESSION['errors']['username'])) : ?>
-                                        <p class="text-danger mt-1"><?= $_SESSION['errors']['username'] ?></p>
-                                    <?php endif; ?>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input class="form-control" type="password" name="password" id="password" placeholder="********">
-                                    <?php if (isset($_SESSION['errors']['password'])) : ?>
-                                        <p class="text-danger mt-1"><?= $_SESSION['errors']['password'] ?></p>
-                                    <?php endif; ?>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="verifikasi_password" class="form-label">Konfirmasi Password</label>
-                                    <input class="form-control" type="password" name="verifikasi_password" id="verifikasi_password" placeholder="********">
-                                    <?php if (isset($_SESSION['errors']['verifikasi_password'])) : ?>
-                                        <p class="text-danger mt-1"><?= $_SESSION['errors']['verifikasi_password'] ?></p>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                <button type="submit" class="btn btn-warning">Update</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
             <!-- Hapus Modal -->
-            <div class="modal fade" id="hapus<?= $dt['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $dt['id'] ?>" aria-hidden="true">
+            <div class="modal fade" id="hapus<?= $dt['id_detail_transaksi'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $dt['id_detail_transaksi'] ?>" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="editLabel<?= $dt['id'] ?>">Konfirmasi Hapus</h1>
+                            <h1 class="modal-title fs-5" id="editLabel<?= $dt['id_detail_transaksi'] ?>">Konfirmasi Hapus</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form method="post" action="<?= Routes::base('petugas/hapus') ?>">
+                        <form method="post" action="<?= Routes::base('detail_transaksi/hapus') ?>">
 
                             <div class="modal-body">
-                                <input type="hidden" name="id" value="<?= $dt['id'] ?>">
+                                <input type="hidden" name="id" value="<?= $dt['id_detail_transaksi'] ?>">
                                 <p class="text-center my-3">Apakah anda yakin ingin menghapus data ini?</p>
                             </div>
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                                 <button type="submit" class="btn btn-danger">Ya Hapus!</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="modal fade" id="pembayaran" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="tambahLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="tambahLabel">Pembayaran</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form class="" method="post" action="<?= Routes::base('detail_transaksi/pembayaran') ?>">
+                            <div class="modal-body">
+
+                                <input type="hidden" name="id_detail_transaksi" value="<?= $dt['id_detail_transaksi_detail_transaksi'] ?>">
+
+                                <div class=" rounded-3 my-3">
+                                    <h5 class="text-muted">Total Pembayaran</h5>
+                                    <h2 class="fw-bold text-success"><?= CurrencyFormatter::formatCurrency($total_harga) ?></h2>
+                                </div>
+
+                                <input type="hidden" name="total_harga" value="<?= $total_harga ?>">
+
+                                <div class="mb-3">
+                                    <label for="pembayaran" class="form-label">Bayar</label>
+                                    <input class="form-control" id="pembayaran" type="number" name="pembayaran" placeholder="Masukan harga satuan">
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                <button type="submit" class="btn btn-primary">Bayar</button>
                             </div>
                         </form>
                     </div>
@@ -200,10 +131,10 @@
 
                     <div class="bg-light p-3 rounded-3 mt-3">
                         <h5 class="text-muted">Total Pembayaran</h5>
-                        <h2 class="fw-bold text-success">Rp <?= number_format($total_harga, 0, ',', '.') ?></h2>
+                        <h2 class="fw-bold text-success"><?= CurrencyFormatter::formatCurrency($total_harga) ?></h2>
                     </div>
 
-                    <button class="btn btn-success btn-lg w-100 mt-4 shadow-sm fw-semibold">
+                    <button class="btn btn-success btn-lg w-100 mt-4 shadow-sm fw-semibold" data-bs-toggle="modal" data-bs-target="#pembayaran">
                         <i class="bi bi-credit-card me-2"></i> Bayar Sekarang
                     </button>
 
@@ -215,8 +146,6 @@
 
     </div>
 </div>
-
-
 
 <!-- Modal -->
 <?= App::extends('admin/detail_transaksi/modalTambah', [

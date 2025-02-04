@@ -36,7 +36,43 @@ class Detail_transaksi
         if ($tambah > 0) {
             $_SESSION['success'] = "Berhasil Menambah Layanan";
             header('Location:' . Routes::base('admin/detail_transaksi/' . $kodeTrans['kode_trans']));
-        }else {
+        } else {
+        }
+    }
+
+    public function pembayaran()
+    {
+        $data = [
+            'id_detail_transaksi' => $_POST['id_detail_transaksi'],
+            'total_harga' => $_POST['total_harga'],
+            'pembayaran' => $_POST['pembayaran'],
+        ];
+
+        $id_transaksi = DB::table('detail_transaksi')
+            ->select()
+            ->where('id_detail_transaksi', '=', $data['id_detail_transaksi'])
+            ->single();
+        DB::reset();
+
+
+
+        $hasil = TextHelper::to('int', $data['pembayaran']) - TextHelper::to('int', $data['total_harga']);
+
+        if ($hasil >= 0) {
+            $status_pembayaran = DB::table('transaksi')
+                ->where('id_transaksi', '=', $id_transaksi['id_transaksi'])
+                ->update([
+                    'status_pembayaran' => 1
+                ]);
+            DB::reset();
+
+            if ($status_pembayaran > 0) {
+                header('Location:' . Routes::base('admin/transaksi'));
+            }else{
+                header('Location:' . Routes::base('admin/transaksi'));
+            }
+        }else{
+            header('Location:' . Routes::base('admin/transaksi'));
         }
     }
 }
