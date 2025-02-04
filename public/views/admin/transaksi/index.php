@@ -11,6 +11,7 @@
                         <th>NO.</th>
                         <th>Customer</th>
                         <th class="text-center">Status</th>
+                        <th class="text-center">Status Pembayaran</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -20,23 +21,29 @@
                         <tr>
                             <td><?= $i++ ?></td>
                             <td><?= $t['nama'] ?></td>
-                            <td>
+                            <td class="text-center">
+                                <span>
+
+                                    <?php
+                                    if ($t['status_transaksi'] == 1) {
+                                        echo 'Dalam Antrean';
+                                    } else if ($t['status_transaksi'] == 2) {
+                                        echo 'Di proses';
+                                    } else if ($t['status_transaksi'] == 3) {
+                                        echo 'Di cuci';
+                                    } else  if ($t['status_transaksi'] == 4) {
+                                        echo 'Di jemur';
+                                    } else if ($t['status_transaksi'] == 5) {
+                                        echo 'Selesai';
+                                    } else if ($t['status_transaksi'] == 0) {
+                                        echo 'Menunggu';
+                                    }
+                                    ?>
+                                </span>
+                            </td>
+                            <td class="text-center">
                                 <span>
                                     <?php
-                                    if ($t['status'] == 1) {
-                                        echo 'Dalam Antrean';
-                                    } else if ($t['status'] == 2) {
-                                        echo 'Di proses';
-                                    } else if ($t['status'] == 3) {
-                                        echo 'Di cuci';
-                                    } else  if ($t['status'] == 4) {
-                                        echo 'Di jemur';
-                                    } else if ($t['status'] == 5) {
-                                        echo 'Selesai';
-                                    } else {
-                                        echo 'Pending';
-                                    }
-                                    echo ' - ';
                                     if ($t['status_pembayaran'] == 1) {
                                         echo 'Di bayar';
                                     } else {
@@ -44,12 +51,12 @@
                                     }
                                     ?>
                                 </span>
-
                             </td>
                             <td class="d-flex justify-content-center gap-3 align-items-center">
-                                <a class="btn btn-info" href="<?= Routes::base('admin/detail_transaksi/') . $t['kode_trans']  ?>">Detail</a>
-                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $t['id_transaksi'] ?>">Edit</button>
-                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $t['id_transaksi'] ?>">Hapus</button>
+                                <button class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#status<?= $t['id_transaksi'] ?>">Status</button>
+                                <a class="btn btn-sm btn-info" href="<?= Routes::base('admin/detail_transaksi/') . $t['kode_trans']  ?>">Detail</a>
+                                <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $t['id_transaksi'] ?>">Edit</button>
+                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $t['id_transaksi'] ?>">Hapus</button>
                             </td>
                         </tr>
 
@@ -108,6 +115,43 @@
                             </div>
                         </div>
 
+                        <!-- Status Modal -->
+                        <div class="modal fade" id="status<?= $t['id_transaksi'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $t['id'] ?>" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="editLabel<?= $t['id'] ?>">Edit Status</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form method="post" action="<?= Routes::base('transaksi/status') ?>">
+                                        <input type="hidden" name="id_transaksi" value="<?= $t['id_transaksi'] ?>">
+                                        <input type="hidden" name="id_petugas" value="<?= $t['id_petugas'] ?>">
+                                        <div class="modal-body">
+
+                                            <div class="mb-3">
+                                                <label for="status_transaksi" class="form-label">Status Transaksi</label>
+                                                <select name="status_transaksi" id="status_transaksi" class="form-control">
+                                                    <option value="0" <?= $t['status_transaksi'] == 0 ? 'selected' : '' ?>>Menunggu</option>
+                                                    <option value="1" <?= $t['status_transaksi'] == 1 ? 'selected' : '' ?>>Dalam Antrean</option>
+                                                    <option value="2" <?= $t['status_transaksi'] == 2 ? 'selected' : '' ?>>Di Proses</option>
+                                                    <option value="3" <?= $t['status_transaksi'] == 3 ? 'selected' : '' ?>>Di Cuci</option>
+                                                    <option value="4" <?= $t['status_transaksi'] == 4 ? 'selected' : '' ?>>Di Jemur</option>
+                                                    <option value="5" <?= $t['status_transaksi'] == 5 ? 'selected' : '' ?>>Selesai</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                            <button type="submit" class="btn btn-warning">Ubah</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="modal fade" id="hapus<?= $t['id_transaksi'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editLabel<?= $t['id'] ?>" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
@@ -115,7 +159,7 @@
                                         <h1 class="modal-title fs-5" id="editLabel<?= $t['id'] ?>">Konfirmasi Hapus</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form method="post" action="<?= Routes::base('transaksi/edit') ?>">
+                                    <form method="post" action="<?= Routes::base('transaksi/hapus') ?>">
                                         <input type="hidden" name="id_transaksi" value="<?= $t['id_transaksi'] ?>">
                                         <div class="modal-body">
                                             <input type="hidden" name="id" value="<?= $p['id'] ?>">

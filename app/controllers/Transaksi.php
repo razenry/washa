@@ -168,6 +168,8 @@ class Transaksi
         if ($status_transaksi > 0) {
             $_SESSION['success'] = "Status transaksi berhasil diubah";
             header('Location:' . Routes::base('admin/transaksi'));
+        }else{
+            header('Location:' . Routes::base('admin/transaksi'));
         }
 
     }

@@ -38,7 +38,8 @@
         <?php endif; ?>
 
       </ul>
-      <div class="d-flex">
+      <div class="d-flex gap-2">
+        <a class="btn btn-primary" href="<?= Routes::base('admin/profile') ?>">Profile</a>
         <a class="btn btn-outline-danger" href="<?= Routes::base('admin/logout') ?>">Logout</a>
       </div>
     </div>

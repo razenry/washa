@@ -178,8 +178,66 @@ class Admin
         App::view('admin/customer/index', $data, 'admin/app');
     }
 
+    public function profile()
+    {
+        UserModel::isLog();
 
+        $profile = DB::table('akun')
+            ->select()
+            ->join('biodata_user', 'akun.id_biodata = biodata_user.id_biodata')
+            ->where('id', '=', $_SESSION['user']['id'])
+            ->single();
+        DB::reset();
 
+        $data = [
+            'title' => 'Profile ' . $_SESSION['user']['nama'],
+            'profile' => $profile,
+            'errors' => $_SESSION['errors'] ?? null
+        ];
+
+        App::view('admin/profile/index', $data, 'admin/app');
+    }
+
+    public function update()
+    {
+
+        $id = $_POST['id'];
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $oldPassword = DB::table('akun')
+            ->select('password')
+            ->where('id', '=', $id)
+            ->single();
+        if ($oldPassword == $password) {
+            $password = $oldPassword;
+        } else {
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        }
+
+        if ($_POST['password'] == null) {
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        }
+
+        $data = [
+            'id' => htmlspecialchars($_POST['id']),
+            'username' => htmlspecialchars($_POST['username']),
+            'password' => htmlspecialchars($password),
+        ];
+
+        $profile = DB::table('akun')
+            ->where('akun.id', '=', $data['id'])
+            ->update([
+                'username' => $data['username'],
+                'password' => $data['password'],
+            ]);
+        DB::reset();
+
+        if ($profile > 0) {
+            $_SESSION['success'] = "Berhasil ubah profile";
+            header('Location:' . Routes::base('admin/profile'));
+        } else {
+            header('Location:' . Routes::base('admin/profile'));
+        }
+    }
 
     public function login()
     {
