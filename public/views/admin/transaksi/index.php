@@ -62,7 +62,7 @@
                                 <button class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#status<?= $t['id_transaksi'] ?>">Status</button>
                                 <a class="btn btn-sm btn-info" href="<?= Routes::base('admin/detail_transaksi/') . $t['kode_trans']  ?>">Detail</a>
                                 <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $t['id_transaksi'] ?>">Edit</button>
-                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $t['id_transaksi'] ?>">Hapus</button>
+                                <button class="btn btn-sm btn-danger <?= $t['status_pembayaran'] == 1 ? 'disabled' : '' ?>" data-bs-toggle="modal" data-bs-target="#hapus<?= $t['id_transaksi'] ?>">Hapus</button>
                             </td>
                         </tr>
 

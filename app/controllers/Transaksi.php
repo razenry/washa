@@ -18,7 +18,7 @@ class Transaksi
             'tgl_transaksi' => htmlspecialchars($_POST['tgl_transaksi']),
             'waktu_transaksi' => htmlspecialchars($_POST['waktu_transaksi']),
             'id_petugas' => htmlspecialchars($_POST['id_petugas']),
-            'status' => '0',
+            'status_transaksi' => '0',
             'status_pembayaran' => '0',
         ];
 
@@ -51,7 +51,7 @@ class Transaksi
             'tgl_transaksi' => $data['tgl_transaksi'],
             'waktu_transaksi' => $data['waktu_transaksi'],
             'id_petugas' => $data['id_petugas'],
-            'status' => $data['status'],
+            'status_transaksi' => $data['status_transaksi'],
             'status_pembayaran' => $data['status_pembayaran'],
         ]);
 
@@ -78,7 +78,7 @@ class Transaksi
             'tgl_transaksi' => htmlspecialchars($_POST['tgl_transaksi']),
             'waktu_transaksi' => htmlspecialchars($_POST['waktu_transaksi']),
             'id_petugas' => htmlspecialchars($_POST['id_petugas']),
-            'status' => '0',
+            'status_transaksi' => '0',
         ];
 
         $validatedData = TransaksiModel::validation($data);
@@ -116,7 +116,7 @@ class Transaksi
             'tgl_transaksi' => $validatedData['tgl_transaksi'],
             'waktu_transaksi' => $validatedData['waktu_transaksi'],
             'id_petugas' => $validatedData['id_petugas'],
-            'status' => $validatedData['status'],
+            'status_transaksi' => $validatedData['status'],
         ]);
 
         DB::reset();
