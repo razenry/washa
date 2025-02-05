@@ -16,6 +16,10 @@ class DashboardModel
             ->count();
         DB::reset();
 
+        $data['total_pemasukan'] = DB::table('detail_transaksi')
+            ->sum('total_harga');
+        DB::reset();
+
         $data['customer'] = DB::table('customer')
             ->count();
         DB::reset();

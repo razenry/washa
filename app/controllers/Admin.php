@@ -22,9 +22,9 @@ class Admin
         $data = [
             'title' => 'Dashboard',
             'customer' => $card['customer'],
-            'petugas' => $card['petugas'],
             'pesanan' => $card['pesanan'],
             'selesai' => $card['selesai'],
+            'total_pemasukan' => $card['total_pemasukan'],
             'transaksi' => $transaksi,
             'motivation' => ExtendsHelper::getMotivation(),
         ];

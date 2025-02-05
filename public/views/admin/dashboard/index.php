@@ -4,7 +4,7 @@
 
 <div class="row mt-3">
     <div class="col-lg-3">
-        <div class="card shadow bg-info rounded-pill">
+        <div class="card shadow bg-info rounded-pill text-white">
             <div class="card-body w-100 p-4">
                 <h3 class="text-center">Customer</h3>
                 <p class="text-center fw-bold fs-3"><?= $customer ?></p>
@@ -12,15 +12,15 @@
         </div>
     </div>
     <div class="col-lg-3">
-        <a href="<?= Routes::base('admin/petugas') ?>" class="card shadow bg-warning rounded-pill text-dark" style="text-decoration: none;">
+        <a href="<?= Routes::base('admin/laporan_keuangan') ?>" class="card shadow bg-primary rounded-pill text-white" style="text-decoration: none;">
             <div class="card-body w-100 p-4">
-                <h3 class="text-center">Petugas</h3>
-                <p class="text-center fw-bold fs-3"><?= $petugas ?></p>
+                <h3 class="text-center">Pemasukan</h3>
+                <p class="text-center fw-bold fs-3"><?= CurrencyFormatter::formatCurrency($total_pemasukan) ?></p>
             </div>
         </a>
     </div>
     <div class="col-lg-3">
-        <div class="card shadow bg-primary rounded-pill">
+        <div class="card shadow bg-warning rounded-pill">
             <div class="card-body w-100 p-4 text-white">
                 <h3 class="text-center">Pesanan</h3>
                 <p class="text-center fw-bold fs-3"><?= $pesanan ?></p>
